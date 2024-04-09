@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       selectedOption: "LogIn",
-      isWideEnough: window.innerWidth > 768,
+      isWideEnough: false, // Inicializar como falso
     };
   },
   methods: {
@@ -39,6 +39,7 @@ export default {
     },
   },
   mounted() {
+    this.isWideEnough = window.innerWidth > 768; // Inicializar isWideEnough después de que el componente se monte
     window.addEventListener("resize", this.handleResize);
   },
   beforeDestroy() {

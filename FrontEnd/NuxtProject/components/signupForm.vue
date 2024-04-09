@@ -52,7 +52,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from "axios";
 import { signupEndPoint } from "~/constants/endpoints";
 import CryptoJS from "crypto-js";
@@ -102,6 +102,7 @@ export default {
           { validator: this.validateConfirmPassword, trigger: "blur" },
         ],
       },
+      isWideEnough: false, // Inicializar como falso
     };
   },
   methods: {
@@ -138,6 +139,16 @@ export default {
         callback();
       }
     },
+    handleResize() {
+      this.isWideEnough = window.innerWidth > 768;
+    },
+  },
+  mounted() {
+    this.isWideEnough = window.innerWidth > 768; // Inicializar isWideEnough después de que el componente se monte
+    window.addEventListener("resize", this.handleResize);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>

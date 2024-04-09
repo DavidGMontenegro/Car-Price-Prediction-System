@@ -77,11 +77,11 @@ export default {
           },
         ],
       },
-      isWideEnough: window.innerWidth > 768,
+      isWideEnough: false, // Inicializar como falso
     };
   },
   methods: {
-    encrypt(text: String) {
+    encrypt(text: string) {
       return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
     },
     async login() {
@@ -100,6 +100,7 @@ export default {
     },
   },
   mounted() {
+    this.isWideEnough = window.innerWidth > 768; // Inicializar isWideEnough después de que el componente se monte
     window.addEventListener("resize", this.handleResize);
   },
   beforeDestroy() {
