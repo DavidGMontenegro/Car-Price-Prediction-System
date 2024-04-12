@@ -1,10 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\david\\Desktop\\Curso\\FinalProject\\BackEnd\\API\\",
+  "WorkspaceRootPath": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\finalproject\\backend\\api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\finalapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:finalapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,12 +35,64 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Services\\UserService.cs",
+              "RelativeToolTip": "Services\\UserService.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAQwCoAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T17:54:09.908Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FinalAPI",
+              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\FinalAPI.csproj",
+              "RelativeDocumentMoniker": "FinalAPI.csproj",
+              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\FinalAPI.csproj",
+              "RelativeToolTip": "FinalAPI.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-04-12T17:24:56.689Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAACsAAAAAAAAAAAAQwEIAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T17:22:33.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T17:18:46.703Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\FinalProject\\BackEnd\\API\\Controllers\\UserController.cs",
+              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\FinalProject\\BackEnd\\API\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Controllers\\UserController.cs",
               "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAYwCQAAAANAAAA",
+              "ViewState": "AQIAACQAAAAAAAAAAAAYwCsAAABUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-09T11:21:08.379Z",
               "EditorCaption": ""

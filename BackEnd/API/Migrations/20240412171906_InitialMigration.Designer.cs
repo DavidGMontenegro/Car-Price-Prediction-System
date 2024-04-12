@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240407135859_InitialMigration")]
+    [Migration("20240412171906_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -66,6 +66,10 @@ namespace FinalAPI.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ProfilePicture")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()

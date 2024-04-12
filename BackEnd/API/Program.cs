@@ -61,6 +61,13 @@ namespace FinalAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseHttpsRedirection();
+
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            });
+
             app.UseAuthentication();
             app.UseAuthorization();
 

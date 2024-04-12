@@ -81,20 +81,29 @@ export default {
     };
   },
   methods: {
-    encrypt(text: string) {
+    encrypt(text: String) {
       return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
     },
     async login() {
       try {
+        await this.$refs.loginForm.validate();
+        const response = await axios.post(
+          `${loginEndPoint}?username=${this.loginForm.username.toLowerCase()}&password=${this.encrypt(
+            this.loginForm.password
+          )}`
+        );
+
         const sessionStore = useSessionStore();
         sessionStore.login(this.loginForm.username);
-        console.log("INICIO DESDE LOGINFORM");
+        console.log("Login successful:", response.data);
         this.$router.push("/dashboard");
-        //const response = await axios.post(loginEndPoint);
+        // Aquí puedes manejar la respuesta del backend, como almacenar el token de sesión en el almacenamiento local o redirigir a otra página.
       } catch (error) {
         console.error("Failed login", error);
+        // Aquí puedes manejar el error, como mostrar un mensaje al usuario.
       }
     },
+
     handleResize() {
       this.isWideEnough = window.innerWidth > 768;
     },

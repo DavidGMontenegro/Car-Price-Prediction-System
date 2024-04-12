@@ -3,18 +3,14 @@
     <div class="password-change-buttons">
       <el-button @click="cancelChanges" class="password-change-button">
         <img
-          src="@/assets/styles/images/GoBackArrow.png"
+          src="@/assets/images/GoBackArrow.png"
           alt="Cancelar"
           class="button-icon"
         />
       </el-button>
       <p>Change Password</p>
       <el-button @click="saveChanges" class="password-change-button">
-        <img
-          src="@/assets/styles/images/Done.png"
-          alt="Guardar"
-          class="button-icon"
-        />
+        <img src="@/assets/images/Done.png" alt="Guardar" class="button-icon" />
       </el-button>
     </div>
     <el-form label-position="top" style="max-width: 600px" ref="form">

@@ -4292,11 +4292,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\david\\Desktop\\Curso\\FinalProject\\BackEnd\\API\\FinalAPI.csproj",
+      "projectUniqueName": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\FinalAPI.csproj",
       "projectName": "FinalAPI",
-      "projectPath": "C:\\Users\\david\\Desktop\\Curso\\FinalProject\\BackEnd\\API\\FinalAPI.csproj",
+      "projectPath": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\FinalAPI.csproj",
       "packagesPath": "C:\\Users\\david\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\david\\Desktop\\Curso\\FinalProject\\BackEnd\\API\\obj\\",
+      "outputPath": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\david\\AppData\\Roaming\\NuGet\\NuGet.Config",

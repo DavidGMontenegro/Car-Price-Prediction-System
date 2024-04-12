@@ -3,18 +3,14 @@
     <div class="editing-buttons" v-if="editing">
       <el-button @click="cancelChanges" class="edit-button">
         <img
-          src="@/assets/styles/images/GoBackArrow.png"
+          src="@/assets/images/GoBackArrow.png"
           alt="Cancelar"
           class="button-icon"
         />
       </el-button>
       <p>Edit My Data</p>
       <el-button @click="saveChanges" class="edit-button">
-        <img
-          src="@/assets/styles/images/Done.png"
-          alt="Guardar"
-          class="button-icon"
-        />
+        <img src="@/assets/images/Done.png" alt="Guardar" class="button-icon" />
       </el-button>
     </div>
     <div class="profile-picture" @click="uploadProfilePicture">
@@ -26,7 +22,7 @@
       />
       <div class="placeholder">
         <img
-          src="@/assets/styles/images/UserDefaultImage.jpg"
+          src="@/assets/images/UserDefaultImage.jpg"
           alt="Placeholder"
           class="placeholder-image"
         />

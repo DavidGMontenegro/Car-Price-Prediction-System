@@ -16,7 +16,7 @@ namespace FinalAPI.Services
         public async Task<User> RegisterUser(User user)
         {
             // Verificar si el usuario ya existe
-            if (await _context.Users.AnyAsync(u => u.Username == user.Username))
+            if (await _context.Users.AnyAsync(u => u.Username == user.Username || u.Email == user.Email))
             {
                 throw new ArgumentException("El usuario o correo electrónico ya están registrados.");
             }
@@ -33,7 +33,7 @@ namespace FinalAPI.Services
 
         public async Task<User?> Authenticate(string username, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username || u.Email == username);
             if (user == null)
             {
                 return null;
