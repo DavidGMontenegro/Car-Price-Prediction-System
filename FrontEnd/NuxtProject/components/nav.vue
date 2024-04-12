@@ -20,6 +20,9 @@
     <el-menu-item index="4" route="/" v-if="session.isLoggedIn" @click="logout"
       >Cerrar sesión</el-menu-item
     >
+    <el-menu-item index="5" v-if="session.isLoggedIn" route="/personal-data"
+      >My data</el-menu-item
+    >
   </el-menu>
 </template>
 

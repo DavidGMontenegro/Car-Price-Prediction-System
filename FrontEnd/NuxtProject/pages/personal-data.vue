@@ -9,37 +9,42 @@
     </div>
     <div class="right-section centered">
       <div class="content">
-        <loginForm v-if="selectedOption === 'LogIn'" />
-        <signupForm v-else-if="selectedOption === 'SignUp'" />
-        <Navbar @option-selected="handleOptionSelected" />
+        <div v-if="!changePassword" class="user-data-container">
+          <PersonalDataDisplay />
+          <button class="change-password-button" @click="changePassword = true">
+            Cambiar contraseña
+          </button>
+        </div>
+        <div v-else>
+          <ChangePassword @cancel="changePassword = false" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/loginNavBar.vue";
-import loginForm from "@/components/loginForm.vue";
-import signupForm from "@/components/signupForm.vue";
+import PersonalDataDisplay from "@/components/PersonalDataDisplay.vue";
+import ChangePassword from "@/components/ChangePassword.vue";
 
 export default {
-  components: { Navbar, loginForm, signupForm },
   data() {
+    definePageMeta({
+      middleware: "auth",
+    });
+
     return {
-      selectedOption: "LogIn",
-      isWideEnough: false, // Inicializar como falso
+      changePassword: false,
+      isWideEnough: false,
     };
   },
   methods: {
     handleResize() {
       this.isWideEnough = window.innerWidth > 768;
     },
-    handleOptionSelected(option) {
-      this.selectedOption = option;
-    },
   },
   mounted() {
-    this.isWideEnough = window.innerWidth > 768; // Inicializar isWideEnough después de que el componente se monte
+    this.isWideEnough = window.innerWidth > 768;
     window.addEventListener("resize", this.handleResize);
   },
   beforeDestroy() {
@@ -74,5 +79,26 @@ export default {
 .content {
   text-align: center;
   padding: 20px;
+}
+
+.user-data-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.change-password-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.change-password-button:hover {
+  background-color: #45a049;
 }
 </style>
