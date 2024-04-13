@@ -18,7 +18,7 @@ namespace FinalAPI.Services
             // Verificar si el usuario ya existe
             if (await _context.Users.AnyAsync(u => u.Username == user.Username || u.Email == user.Email))
             {
-                throw new ArgumentException("El usuario o correo electrónico ya están registrados.");
+                throw new ArgumentException("Username or email already in use");
             }
 
             // Hash de la contraseña (debes implementar correctamente el hash de la contraseña)
@@ -46,6 +46,69 @@ namespace FinalAPI.Services
             {
                 return null;
             }
+        }
+
+        public async Task<User?> ModifyUserData(string oldUsername, string newUsername, string newEmail)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == oldUsername);
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (await _context.Users.AnyAsync(u => u.Username == newUsername && u.Id != user.Id))
+            {
+                throw new ArgumentException("New username is already in use");
+            }
+
+            if (await _context.Users.AnyAsync(u => u.Email == newEmail && u.Id != user.Id))
+            {
+                throw new ArgumentException("New email is already in use");
+            }
+
+            user.Username = newUsername;
+            user.Email = newEmail;
+
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+
+        public async Task<User?> GetUserData(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return user;
+        }
+
+        public async Task<User?> ChangeUserPassword(string username, string oldPassword, string newPassword)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null)
+            {
+                return null;
+            }
+
+            user.Password = newPassword;
+
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task<User?> ChangeUserProfilePic(string username, byte[] newProfilePic)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null)
+            {
+                return null;
+            }
+
+            user.ProfilePicture = newProfilePic;
+
+            await _context.SaveChangesAsync();
+
+            return user;
         }
     }
 }

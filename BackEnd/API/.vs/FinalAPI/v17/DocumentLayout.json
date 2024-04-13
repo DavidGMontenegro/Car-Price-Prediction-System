@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\services\\mailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:services\\mailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\finalapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:finalapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|c:\\users\\david\\desktop\\curso\\digitalstackfinalproject\\backend\\api\\controllers\\mailcontrller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AEBEEB9-8FDD-4E68-868E-DB7E72F4DFC3}|FinalAPI.csproj|solutionrelative:controllers\\mailcontrller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,58 +34,57 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "Services\\UserService.cs",
-              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Services\\UserService.cs",
-              "RelativeToolTip": "Services\\UserService.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAQwCoAAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-12T17:54:09.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FinalAPI",
-              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\FinalAPI.csproj",
-              "RelativeDocumentMoniker": "FinalAPI.csproj",
-              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\FinalAPI.csproj",
-              "RelativeToolTip": "FinalAPI.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-04-12T17:24:56.689Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAACsAAAAAAAAAAAAQwEIAAAANAAAA",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAQwC4AAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-12T17:22:33.317Z",
+              "WhenOpened": "2024-04-13T11:09:01.341Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MailService.cs",
+              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Services\\MailService.cs",
+              "RelativeDocumentMoniker": "Services\\MailService.cs",
+              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Services\\MailService.cs",
+              "RelativeToolTip": "Services\\MailService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-13T10:57:52.228Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Models\\User.cs",
               "RelativeDocumentMoniker": "Models\\User.cs",
               "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Models\\User.cs",
               "RelativeToolTip": "Models\\User.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAuAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-12T17:18:46.703Z",
+              "WhenOpened": "2024-04-13T15:26:27.133Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Services\\UserService.cs",
+              "RelativeToolTip": "Services\\UserService.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-13T11:07:30.161Z",
               "EditorCaption": ""
             },
             {
@@ -92,10 +95,22 @@
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Controllers\\UserController.cs",
               "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAYwCsAAABUAAAA",
+              "ViewState": "AQIAAFYAAAAAAAAAAAAgwGYAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-09T11:21:08.379Z",
+              "WhenOpened": "2024-04-13T11:06:33.658Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MailContrller.cs",
+              "DocumentMoniker": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Controllers\\MailContrller.cs",
+              "RelativeDocumentMoniker": "Controllers\\MailContrller.cs",
+              "ToolTip": "C:\\Users\\david\\Desktop\\Curso\\DigitalStackFinalProject\\BackEnd\\API\\Controllers\\MailContrller.cs",
+              "RelativeToolTip": "Controllers\\MailContrller.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAwA0AAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-13T10:57:50.711Z"
             }
           ]
         }

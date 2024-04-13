@@ -1,7 +1,7 @@
 <template>
   <div class="personal-data-display">
     <div class="editing-buttons" v-if="editing">
-      <el-button @click="cancelChanges" class="edit-button">
+      <el-button @click="toggleEditing" class="edit-button">
         <img
           src="@/assets/images/GoBackArrow.png"
           alt="Cancelar"
@@ -14,19 +14,22 @@
       </el-button>
     </div>
     <div class="profile-picture" @click="uploadProfilePicture">
-      <img
-        v-if="profileImage"
-        :src="profileImage"
-        alt="Profile Picture"
-        class="image"
-      />
       <div class="placeholder">
         <img
-          src="@/assets/images/UserDefaultImage.jpg"
+          :src="profileImageUrl"
           alt="Placeholder"
           class="placeholder-image"
         />
-        <div class="change-photo-text">Change Pic</div>
+        <div class="change-photo-text">
+          <p>Change Photo</p>
+          <input
+            id="fileid"
+            type="file"
+            accept="image/*"
+            @change="handleFileUpload"
+            hidden
+          />
+        </div>
       </div>
     </div>
     <div class="data-item">
@@ -50,30 +53,96 @@
 
 <script setup lang="ts">
 import { useSessionStore } from "~/stores/session";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import axios from "axios";
+import {
+  getUserDataEndPoint,
+  changeProfilePicEndPoint,
+  modifyUserDataEndPoint,
+} from "~/constants/endpoints";
 
 const session = useSessionStore();
-const username = session.username;
-const email = "email";
-const profileImage = ref(null);
+const username = ref(session.username);
 const editing = ref(false);
-let editedUsername = username;
-let editedEmail = email;
+const profileImageUrl = ref("");
+const email = ref("");
+const oldProfileImageUrl = ref("");
+const editedUsername = ref("");
+const editedEmail = ref("");
 
-const uploadProfilePicture = () => {};
+const fetchUserData = async () => {
+  try {
+    const response = await axios.get(
+      `${getUserDataEndPoint}?username=${username.value}`
+    );
+    const userData = response.data;
+    email.value = userData.email;
+    profileImageUrl.value = `data:image/png;base64,${userData.profilePicture}`;
+    oldProfileImageUrl.value = profileImageUrl.value;
+  } catch (error) {
+    console.error("Failed to fetch user data", error);
+  }
+};
+
+fetchUserData();
+
+const uploadProfilePicture = () => {
+  const fileInput = document.getElementById("fileid");
+  if (fileInput) {
+    fileInput.click();
+  }
+};
+
+const handleFileUpload = (event: any) => {
+  const file = event.target.files[0];
+  editing.value = true;
+  const reader = new FileReader();
+
+  reader.onload = (event) => {
+    const base64String = event.target.result as String;
+    console.log("Base64 de la imagen:", base64String);
+    profileImageUrl.value = base64String;
+  };
+
+  reader.readAsDataURL(file);
+};
 
 const toggleEditing = () => {
   editing.value = !editing.value;
+  editedEmail.value = "";
+  editedUsername.value = "";
+  profileImageUrl.value = oldProfileImageUrl.value;
 };
 
-const saveChanges = () => {
-  toggleEditing(); // Salir del modo de edición después de guardar
-};
+const saveChanges = async () => {
+  if (oldProfileImageUrl.value !== profileImageUrl.value) {
+    console.log(username.value);
+    console.log(profileImageUrl.value);
+    const response = await axios.put(
+      `${changeProfilePicEndPoint}?username=${username}`,
+      profileImageUrl.value
+    );
 
-const cancelChanges = () => {
-  editedUsername = "";
-  editedEmail = "";
-  toggleEditing(); // Salir del modo de edición sin guardar
+    console.log("Imagen actualizada", response);
+  }
+
+  let finalUsername =
+    editedUsername.value.length === 0 ? username.value : editedUsername.value;
+  let finalEmail =
+    editedEmail.value.length === 0 ? email.value : editedEmail.value;
+
+  try {
+    const response = await axios.put(
+      `${modifyUserDataEndPoint}?oldUsername=${username.value}&newUsername=${finalUsername}&newEmail=${finalEmail}`
+    );
+  } catch (error) {
+    console.error("Error al guardar los cambios:", error);
+  }
+
+  oldProfileImageUrl.value = profileImageUrl.value;
+  username.value = finalUsername;
+  email.value = finalEmail;
+  toggleEditing();
 };
 </script>
 

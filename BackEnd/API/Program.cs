@@ -44,7 +44,7 @@ namespace FinalAPI
             builder.Services.AddAuthorization();
 
             // Our Services
-            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IMailService, MailService>();
             builder.Services.AddScoped<IUserService, UserService>();
 
             //Our DataBase
@@ -70,7 +70,6 @@ namespace FinalAPI
 
             app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 

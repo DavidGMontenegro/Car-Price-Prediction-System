@@ -4,18 +4,30 @@ using System.Net.Mail;
 
 public class MailService : IMailService
 {
-    private readonly SmtpClient _smtpClient;
 
-    public Task SendEmailAsync(string mailFrom, string subject, string body)
+    public Task SendEmail(string mailFrom, string subject, string body)
     {
-        var smtpClient = new SmtpClient("smtp.gmail.com")
-        {
-            Port = 587,
-            Credentials = new NetworkCredential("username", "password"),
-            EnableSsl = true,
-        };
+        //setx EMAIL davidgm0928@gmail.com
+        //setx PASSWORD contraseña
+        string email = Environment.GetEnvironmentVariable("EMAIL");
+        string password = Environment.GetEnvironmentVariable("PASSWORD");
 
-        smtpClient.Send("email", "recipient", "subject", "body");
-        return Task.FromResult(0);
+        if (email == null || password == null)
+        {
+            var smtpClient = new SmtpClient("smtp.gmail.com",587)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(email, password),
+            };
+
+            return smtpClient.SendMailAsync(new MailMessage(from: "davidgm0928@gmail.com", 
+                                            to: "davidgm0928@gmail.com", 
+                                            subject,
+                                            body));
+        }else
+        {
+            return null;
+        }
+        
     }
 }
