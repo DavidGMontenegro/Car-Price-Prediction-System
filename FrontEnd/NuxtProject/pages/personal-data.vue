@@ -1,6 +1,6 @@
 <template>
   <div class="custom-container">
-    <div class="left-section" v-if="isWideEnough">
+    <div class="left-section">
       <img
         src="https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="Background"
@@ -35,20 +35,7 @@ export default {
 
     return {
       changePassword: false,
-      isWideEnough: false,
     };
-  },
-  methods: {
-    handleResize() {
-      this.isWideEnough = window.innerWidth > 768;
-    },
-  },
-  mounted() {
-    this.isWideEnough = window.innerWidth > 768;
-    window.addEventListener("resize", this.handleResize);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>
@@ -100,5 +87,19 @@ export default {
 
 .change-password-button:hover {
   background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+  .left-section {
+    display: none;
+  }
+
+  .right-section {
+    width: 100%;
+    background-image: url("https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <el-menu
     :default-active="activeIndex"
-    class="custom-nav"
+    class="navbar"
     mode="horizontal"
     background-color="#222831"
     text-color="#fff"
@@ -17,12 +17,21 @@
       route="/account-managment"
       >Log In</el-menu-item
     >
-    <el-menu-item index="4" route="/" v-if="session.isLoggedIn" @click="logout"
-      >Cerrar sesión</el-menu-item
-    >
-    <el-menu-item index="5" v-if="session.isLoggedIn" route="/personal-data"
+
+    <el-menu-item index="4" v-if="session.isLoggedIn" route="/personal-data"
       >My data</el-menu-item
     >
+
+    <el-menu-item
+      index="5"
+      route="/"
+      v-if="session.isLoggedIn"
+      @click="session.logout()"
+      ><img
+        src="https://static-00.iconduck.com/assets.00/logout-icon-2048x2046-yqonjwjv.png"
+        alt="Cerrar sesión"
+        class="logout-icon"
+    /></el-menu-item>
   </el-menu>
 </template>
 
@@ -31,18 +40,12 @@ import { useSessionStore } from "~/stores/session";
 
 export default {
   setup() {
-    const session = useSessionStore();
-    return { session };
+    return { session: useSessionStore() };
   },
   data() {
     return {
       activeIndex: "1",
     };
-  },
-  methods: {
-    logout() {
-      this.session.logout();
-    },
   },
 };
 </script>
@@ -50,10 +53,9 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/variables.scss";
 
-.custom-nav {
+.navbar {
   background-color: $color-nav-background;
   border: none;
-  height: 10vh;
 }
 
 .links {
@@ -67,7 +69,12 @@ export default {
   height: 100%;
 }
 
-.custom-nav .el-menu-item:hover {
+.navbar .el-menu-item:hover {
   background-color: darken($color-nav-background, 5%);
+}
+
+.logout-icon {
+  width: 24px;
+  height: 24px;
 }
 </style>

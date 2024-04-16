@@ -52,9 +52,14 @@
 
 <script lang="ts">
 import axios from "axios";
-import { signupEndPoint, loginEndPoint } from "~/constants/endpoints";
+import {
+  signupEndPoint,
+  loginEndPoint,
+  sendEmailEndPoint,
+} from "~/constants/endpoints";
 import CryptoJS from "crypto-js";
 import { useSessionStore } from "~/stores/session";
+import { signUpEmailTemplate } from "~/constants/emails";
 
 export default {
   setup() {
@@ -108,16 +113,22 @@ export default {
     };
   },
   methods: {
-    encrypt(text: String) {
+    encrypt(text: string) {
       return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
     },
     async register() {
       try {
-        await this.$refs.signupForm.validate();
+        const isValid = await this.$refs.signupForm.validate();
+        if (!isValid) return;
+
         const response = await axios.post(
           `${signupEndPoint}?username=${this.signupForm.username.toLowerCase()}&email=${
             this.signupForm.email
           }&password=${this.encrypt(this.signupForm.password)}`
+        );
+
+        await axios.post(
+          `${sendEmailEndPoint}?mailFrom=${this.signupForm.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
         );
 
         await axios.post(
@@ -129,14 +140,19 @@ export default {
         sessionStore.login(this.signupForm.username);
 
         this.$router.push("/dashboard");
-
+        /*
+    await axios.post(
+      `${sendEmailEndPoint}?mailFrom=${this.signupForm.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
+    );
+localhost:5076/api/Mail/send-email?mailFrom=davidgm0928%40gmail.com&subject=hola&body=holita
+*/
         console.log("Sign up correct:", response.data);
       } catch (error) {
         console.error("Error while creating the new user:", error);
       }
     },
 
-    validateConfirmPassword(rule, value, callback) {
+    validateConfirmPassword(rule: any, value: any, callback: any) {
       if (value !== this.signupForm.password) {
         callback(new Error("Passwords don´t match"));
       } else {

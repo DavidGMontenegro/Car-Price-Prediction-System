@@ -43,7 +43,6 @@ export default {
         {
           src: "https://images.unsplash.com/photo-1613921568536-555645be4032?q=80&w=2022&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         },
-        // Add more image objects as needed
       ],
     };
   },
@@ -73,8 +72,7 @@ export default {
   .content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: $spacing-large;
+    align-items: flex-start;
 
     .description {
       flex: 1;
@@ -90,6 +88,23 @@ export default {
     .carousel {
       flex: 0.75;
       max-width: 800px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .description {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .carousel {
+      width: 100%;
+      max-width: 100%;
     }
   }
 }

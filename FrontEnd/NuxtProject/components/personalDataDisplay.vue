@@ -75,12 +75,12 @@ const fetchUserData = async () => {
     const response = await axios.get(
       `${getUserDataEndPoint}?username=${username.value}`
     );
-    const userData = response.data;
-    email.value = userData.email;
-    profileImageUrl.value = `data:image/png;base64,${userData.profilePicture}`;
+
+    email.value = response.data.email;
+    profileImageUrl.value = `data:image/png;base64,${response.data.profilePicture}`;
     oldProfileImageUrl.value = profileImageUrl.value;
   } catch (error) {
-    console.error("Failed to fetch user data", error);
+    console.error("Failed to fetch user data: ", error);
   }
 };
 
@@ -99,9 +99,11 @@ const handleFileUpload = (event: any) => {
   const reader = new FileReader();
 
   reader.onload = (event) => {
-    const base64String = event.target.result as String;
-    console.log("Base64 de la imagen:", base64String);
-    profileImageUrl.value = base64String;
+    if (event.target != null) {
+      const base64String = event.target.result as string;
+      console.log("Base64 de la imagen:", base64String);
+      profileImageUrl.value = base64String;
+    }
   };
 
   reader.readAsDataURL(file);
@@ -116,14 +118,12 @@ const toggleEditing = () => {
 
 const saveChanges = async () => {
   if (oldProfileImageUrl.value !== profileImageUrl.value) {
-    console.log(username.value);
-    console.log(profileImageUrl.value);
     const response = await axios.put(
       `${changeProfilePicEndPoint}?username=${username}`,
       profileImageUrl.value
     );
 
-    console.log("Imagen actualizada", response);
+    console.log("Imagen actualizada: ", response);
   }
 
   let finalUsername =

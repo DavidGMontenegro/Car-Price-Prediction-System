@@ -1,6 +1,6 @@
 <template>
   <div class="custom-container">
-    <div class="left-section" v-if="isWideEnough">
+    <div class="left-section">
       <img
         src="https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="Background"
@@ -11,8 +11,8 @@
       <div class="content">
         <loginForm v-if="selectedOption === 'LogIn'" />
         <signupForm v-else-if="selectedOption === 'SignUp'" />
-        <Navbar @option-selected="handleOptionSelected" />
       </div>
+      <Navbar @option-selected="handleOptionSelected" />
     </div>
   </div>
 </template>
@@ -27,23 +27,13 @@ export default {
   data() {
     return {
       selectedOption: "LogIn",
-      isWideEnough: false, // Inicializar como falso
+      isWideEnough: false,
     };
   },
   methods: {
-    handleResize() {
-      this.isWideEnough = window.innerWidth > 768;
-    },
     handleOptionSelected(option) {
       this.selectedOption = option;
     },
-  },
-  mounted() {
-    this.isWideEnough = window.innerWidth > 768; // Inicializar isWideEnough después de que el componente se monte
-    window.addEventListener("resize", this.handleResize);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>
@@ -69,10 +59,27 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .content {
   text-align: center;
   padding: 20px;
+  min-height: 40vh;
+}
+
+@media (max-width: 768px) {
+  .left-section {
+    display: none;
+  }
+
+  .right-section {
+    flex: none;
+    width: 100%;
+    background-image: url("https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 }
 </style>

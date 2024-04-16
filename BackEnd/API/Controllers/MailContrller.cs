@@ -16,7 +16,7 @@ namespace FinalAPI.Controllers
             this.mailService = mailService;
         }
 
-        [HttpPost("register")]
+        [HttpPost("send-email")]
         public async Task<IActionResult> SendEmail(string mailFrom, string subject, string body)
         {
             try

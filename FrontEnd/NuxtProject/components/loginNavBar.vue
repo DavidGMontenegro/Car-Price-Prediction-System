@@ -1,13 +1,13 @@
 <template>
-  <div class="navbar">
-    <div class="arrow" @click="toggleOption(false)">
+  <div class="navbar" @click="toggleOption(false)">
+    <div class="arrow">
       <span v-if="selectedOption === 'SignUp'">&lt;</span>
     </div>
-    <div class="option" @click="toggleOption()">
+    <div class="option">
       <span v-if="selectedOption === 'LogIn'">Sign Up</span>
       <span v-else>Login</span>
     </div>
-    <div class="arrow" @click="toggleOption(true)">
+    <div class="arrow">
       <span v-if="selectedOption === 'LogIn'">&gt;</span>
     </div>
   </div>
@@ -30,19 +30,21 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/styles/variables.scss";
+
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: $color-nav-background;
   padding: $spacing-small $spacing-medium;
+  cursor: pointer;
 }
 
 .option,
 .arrow {
   color: #ffffff;
-  cursor: pointer;
   min-width: 100px;
 }
 

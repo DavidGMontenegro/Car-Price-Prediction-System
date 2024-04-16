@@ -37,7 +37,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { sendEmailEndPoint } from "~/constants/endpoints";
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -58,18 +61,28 @@ export default {
         });
       }
     },
-    submitForm() {
-      console.log("Form submitted:", this.formData);
-      this.formData = {
-        name: "",
-        email: "",
-        message: "",
-      };
-      this.isFormVisible = false;
+    async submitForm() {
+      try {
+        const response = await axios.post(
+          `${sendEmailEndPoint}?mailFrom=dsfinalproject@outlook.com&subject=${this.formData.name}_${this.formData.email}&body=${this.formData.message}`
+        );
+        this.formData = {
+          name: "",
+          email: "",
+          message: "",
+        };
+        this.isFormVisible = false;
+        console.log(response);
+      } catch (error) {
+        console.log("Error sending the email.", error);
+      }
     },
     scrollToBottom() {
       const form = this.$refs.form;
-      form.scrollIntoView({ behavior: "smooth", block: "end" });
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
     },
   },
 };

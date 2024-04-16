@@ -26,6 +26,7 @@
     "@element-plus/nuxt": "^1.0.7",
     "@nuxt/typescript-build": "^3.0.2",
     "@nuxtjs/style-resources": "^1.2.2",
+    "@types/crypto-js": "^4.2.2",
     "@types/jest": "^29.5.12",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/test-utils": "^2.4.4",

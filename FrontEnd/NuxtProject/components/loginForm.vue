@@ -77,7 +77,6 @@ export default {
           },
         ],
       },
-      isWideEnough: false, // Inicializar como falso
     };
   },
   methods: {
@@ -86,7 +85,6 @@ export default {
     },
     async login() {
       try {
-        await this.$refs.loginForm.validate();
         const response = await axios.post(
           `${loginEndPoint}?username=${this.loginForm.username.toLowerCase()}&password=${this.encrypt(
             this.loginForm.password
@@ -97,23 +95,34 @@ export default {
         sessionStore.login(this.loginForm.username);
         console.log("Login successful:", response.data);
         this.$router.push("/dashboard");
+
         // Aquí puedes manejar la respuesta del backend, como almacenar el token de sesión en el almacenamiento local o redirigir a otra página.
       } catch (error) {
         console.error("Failed login", error);
         // Aquí puedes manejar el error, como mostrar un mensaje al usuario.
       }
     },
+    async validateFields() {
+      return await new Promise((resolve) => {
+        const hasSpaces = /\s/.test(newPassword.value);
+        const validLength = newPassword.value.length >= 5;
+        const containsSpecialChar = /[!@#$%^&*]/.test(newPassword.value);
+        const containsUpperCase = /[A-Z]/.test(newPassword.value);
+        const containsLowerCase = /[a-z]/.test(newPassword.value);
+        const containsNumber = /\d/.test(newPassword.value);
 
-    handleResize() {
-      this.isWideEnough = window.innerWidth > 768;
+        const valid =
+          newPassword.value === confirmPassword.value &&
+          !hasSpaces &&
+          validLength &&
+          containsSpecialChar &&
+          containsUpperCase &&
+          containsLowerCase &&
+          containsNumber;
+
+        resolve(valid);
+      });
     },
-  },
-  mounted() {
-    this.isWideEnough = window.innerWidth > 768; // Inicializar isWideEnough después de que el componente se monte
-    window.addEventListener("resize", this.handleResize);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>
@@ -123,7 +132,6 @@ export default {
 
 .login-container {
   display: flex;
-  min-height: 65vh;
 }
 
 .right-section {

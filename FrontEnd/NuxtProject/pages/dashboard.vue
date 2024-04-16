@@ -17,12 +17,10 @@ export default {
   setup() {
     const session = useSessionStore();
 
-    // Establecer la meta de la página
     definePageMeta({
       middleware: "auth",
     });
 
-    // Retornar datos y métodos necesarios para la plantilla
     return {
       isAuthenticated: session.isLoggedIn,
       user: session.username,

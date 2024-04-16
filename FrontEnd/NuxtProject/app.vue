@@ -22,7 +22,7 @@ body {
 
 .app-container {
   background-color: $color-background;
-  min-height: 100vh;
+  min-height: 5vh;
 }
 
 .nuxt-page {

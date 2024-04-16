@@ -32,6 +32,7 @@ export default {
 .footer {
   background-color: $color-nav-background;
   padding: $spacing-medium;
+  margin-top: $spacing-large;
 }
 
 .footer-content {
@@ -48,6 +49,16 @@ export default {
   .footer-link {
     text-decoration: none;
     color: $color-primary;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+  }
+
+  .footer-left {
+    margin-bottom: $spacing-large;
   }
 }
 </style>

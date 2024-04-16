@@ -1,7 +1,7 @@
 <template>
   <div class="password-change-form">
     <div class="password-change-buttons">
-      <el-button @click="cancelChanges" class="password-change-button">
+      <el-button @click="$emit('cancel')" class="password-change-button">
         <img
           src="@/assets/images/GoBackArrow.png"
           alt="Cancelar"
@@ -13,8 +13,12 @@
         <img src="@/assets/images/Done.png" alt="Guardar" class="button-icon" />
       </el-button>
     </div>
-    <el-form label-position="top" style="max-width: 600px" ref="form">
-      <el-form-item label="Contraseña actual">
+    <el-form
+      label-position="top"
+      style="max-width: 600px"
+      :rules="changePasswordRules"
+    >
+      <el-form-item label="Contraseña actual" prop="actualPassword">
         <el-input
           type="password"
           v-model="currentPassword"
@@ -22,7 +26,7 @@
           placeholder="Contraseña actual"
         ></el-input>
       </el-form-item>
-      <el-form-item label="Nueva contraseña">
+      <el-form-item label="Nueva contraseña" prop="nwePassword">
         <el-input
           type="password"
           v-model="newPassword"
@@ -30,7 +34,7 @@
           placeholder="Nueva contraseña"
         ></el-input>
       </el-form-item>
-      <el-form-item label="Confirmar nueva contraseña">
+      <el-form-item label="Confirmar nueva contraseña" prop="repeatPassword">
         <el-input
           type="password"
           v-model="confirmPassword"
@@ -43,15 +47,18 @@
 </template>
 
 <script lang="ts">
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 import axios from "axios";
-import { changePasswordEndPoint } from "~/constants/endpoints";
+import {
+  changePasswordEndPoint,
+  sendEmailEndPoint,
+} from "~/constants/endpoints";
 import { useSessionStore } from "~/stores/session";
 import CryptoJS from "crypto-js";
+import { signUpEmailTemplate } from "~/constants/emails";
 
 export default {
-  setup(_, { emit }) {
-    const emits = defineEmits(["cancel"]);
+  setup() {
     const currentPassword = ref("");
     const newPassword = ref("");
     const confirmPassword = ref("");
@@ -61,14 +68,7 @@ export default {
       return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
     };
 
-    const cancelChanges = () => {
-      // Emitir evento de cancelación
-      // Asegúrate de tener este evento definido donde uses este componente
-      emit("cancel");
-    };
-
     const saveChanges = async () => {
-      // Validar los campos del formulario
       const valid = await validateFields();
 
       if (valid) {
@@ -82,6 +82,10 @@ export default {
             )}&newPassword=${encrypt(newPassword.value)}`
           );
 
+          await axios.post(
+            `${sendEmailEndPoint}?mailFrom=${session.username}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
+          );
+
           // Limpiar los campos después de un cambio de contraseña exitoso
           currentPassword.value = "";
           newPassword.value = "";
@@ -89,20 +93,27 @@ export default {
         } catch (error) {
           console.error("Failed to fetch user data", error);
         }
-        emit("cancel");
       }
     };
 
     const validateFields = async () => {
       return await new Promise((resolve) => {
-        // Validar los campos del formulario
-        // Aquí puedes implementar la lógica de validación que necesites
-        // Por ejemplo, puedes verificar que los campos no estén vacíos y que las contraseñas coincidan
+        const hasSpaces = /\s/.test(newPassword.value);
+        const validLength = newPassword.value.length >= 5;
+        const containsSpecialChar = /[!@#$%^&*]/.test(newPassword.value);
+        const containsUpperCase = /[A-Z]/.test(newPassword.value);
+        const containsLowerCase = /[a-z]/.test(newPassword.value);
+        const containsNumber = /\d/.test(newPassword.value);
+
         const valid =
-          currentPassword.value !== "" &&
-          newPassword.value !== "" &&
-          confirmPassword.value !== "" &&
-          newPassword.value === confirmPassword.value;
+          newPassword.value === confirmPassword.value &&
+          !hasSpaces &&
+          validLength &&
+          containsSpecialChar &&
+          containsUpperCase &&
+          containsLowerCase &&
+          containsNumber;
+
         resolve(valid);
       });
     };
@@ -111,8 +122,45 @@ export default {
       currentPassword,
       newPassword,
       confirmPassword,
-      cancelChanges,
       saveChanges,
+      changePasswordRules: {
+        oldPassword: [
+          {
+            required: true,
+            message: "Please enter your username",
+            trigger: "blur",
+          },
+          {
+            min: 6,
+            message: "La contraseña debe tener al menos 6 caracteres",
+            trigger: "blur",
+          },
+        ],
+        newPassword: [
+          {
+            required: true,
+            message: "Please enter your password",
+            trigger: "blur",
+          },
+          {
+            min: 6,
+            message: "La contraseña debe tener al menos 6 caracteres",
+            trigger: "blur",
+          },
+        ],
+        repeatPassword: [
+          {
+            required: true,
+            message: "Please enter your password",
+            trigger: "blur",
+          },
+          {
+            min: 6,
+            message: "La contraseña debe tener al menos 6 caracteres",
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
 };
@@ -148,6 +196,7 @@ export default {
   justify-content: space-between;
   padding: 10px;
   margin-bottom: 30px;
+  align-items: center;
 }
 
 .password-change-button {
@@ -161,6 +210,12 @@ export default {
 
   &:hover {
     background-color: darken($color-primary, 10%);
+  }
+}
+
+@media (max-width: 768px) {
+  .password-change-form {
+    min-width: 70vw;
   }
 }
 </style>
