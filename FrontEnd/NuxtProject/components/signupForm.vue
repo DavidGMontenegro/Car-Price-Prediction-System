@@ -52,6 +52,8 @@
 
 <script lang="ts">
 import axios from "axios";
+import { ref } from "vue";
+import { ElForm, ElFormItem, ElInput, ElButton, ElCard } from "element-plus";
 import {
   signupEndPoint,
   loginEndPoint,
@@ -62,103 +64,133 @@ import { useSessionStore } from "~/stores/session";
 import { signUpEmailTemplate } from "~/constants/emails";
 
 export default {
+  components: {
+    ElForm,
+    ElFormItem,
+    ElInput,
+    ElButton,
+    ElCard,
+  },
   setup() {
     const session = useSessionStore();
-    return { session };
-  },
-  data() {
-    return {
-      signupForm: {
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      },
-      signupRules: {
-        username: [
-          {
-            required: true,
-            message: "Please, introduce a username",
-            trigger: "blur",
-          },
-        ],
-        email: [
-          {
-            required: true,
-            message: "Please, introduce an email",
-            trigger: "blur",
-          },
-          {
-            type: "email",
-            message: "Please, introduce a valid email",
-            trigger: "blur,change",
-          },
-        ],
-        password: [
-          {
-            required: true,
-            message: "Please, introduce a password",
-            trigger: "blur",
-          },
-        ],
-        confirmPassword: [
-          {
-            required: true,
-            message: "Please, repeat your password",
-            trigger: "blur",
-          },
-          { validator: this.validateConfirmPassword, trigger: "blur" },
-        ],
-      },
-    };
-  },
-  methods: {
-    encrypt(text: string) {
-      return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
-    },
-    async register() {
-      try {
-        const isValid = await this.$refs.signupForm.validate();
-        if (!isValid) return;
+    const signupForm = ref({
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
 
-        const response = await axios.post(
-          `${signupEndPoint}?username=${this.signupForm.username.toLowerCase()}&email=${
-            this.signupForm.email
-          }&password=${this.encrypt(this.signupForm.password)}`
-        );
+    const signupRules = ref({
+      username: [
+        {
+          required: true,
+          message: "Please, introduce a username",
+          trigger: "blur",
+        },
+      ],
+      email: [
+        {
+          required: true,
+          message: "Please, introduce an email",
+          trigger: "blur",
+        },
+        {
+          type: "email",
+          message: "Please, introduce a valid email",
+          trigger: "blur,change",
+        },
+      ],
+      password: [
+        {
+          required: true,
+          message: "Please, introduce a password",
+          trigger: "blur",
+        },
+      ],
+      confirmPassword: [
+        {
+          required: true,
+          message: "Please, repeat your password",
+          trigger: "blur",
+        },
+        { validator: validateConfirmPassword, trigger: "blur" },
+      ],
+    });
 
-        await axios.post(
-          `${sendEmailEndPoint}?mailFrom=${this.signupForm.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
-        );
-
-        await axios.post(
-          `${loginEndPoint}?username=${this.signupForm.username.toLowerCase()}&password=${this.encrypt(
-            this.signupForm.password
-          )}`
-        );
-        const sessionStore = useSessionStore();
-        sessionStore.login(this.signupForm.username);
-
-        this.$router.push("/dashboard");
-        /*
-    await axios.post(
-      `${sendEmailEndPoint}?mailFrom=${this.signupForm.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
-    );
-localhost:5076/api/Mail/send-email?mailFrom=davidgm0928%40gmail.com&subject=hola&body=holita
-*/
-        console.log("Sign up correct:", response.data);
-      } catch (error) {
-        console.error("Error while creating the new user:", error);
-      }
-    },
-
-    validateConfirmPassword(rule: any, value: any, callback: any) {
-      if (value !== this.signupForm.password) {
+    const validateConfirmPassword = (rule, value, callback) => {
+      if (value !== signupForm.value.password) {
         callback(new Error("Passwords don´t match"));
       } else {
         callback();
       }
-    },
+    };
+
+    const encrypt = (text: string) => {
+      return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
+    };
+
+    const register = async () => {
+      try {
+        const isValid = await ref("signupForm").value.validate();
+        if (!isValid) return;
+
+        const response = await axios.post(
+          `${signupEndPoint}?username=${signupForm.value.username.toLowerCase()}&email=${
+            signupForm.value.email
+          }&password=${encrypt(signupForm.value.password)}`
+        );
+
+        await axios.post(
+          `${sendEmailEndPoint}?mailFrom=${signupForm.value.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
+        );
+
+        await axios.post(
+          `${loginEndPoint}?username=${signupForm.value.username.toLowerCase()}&password=${encrypt(
+            signupForm.value.password
+          )}`
+        );
+        const sessionStore = useSessionStore();
+        sessionStore.login(signupForm.value.username);
+
+        this.$router.push("/dashboard");
+
+        console.log("Sign up correct:", response.data);
+      } catch (error) {
+        console.error("Error while creating the new user:", error);
+      }
+    };
+
+    const validateFields = async () => {
+      return await new Promise((resolve) => {
+        const hasSpaces = /\s/.test(signupForm.value.password);
+        const validLength = signupForm.value.password.length >= 5;
+        const containsSpecialChar = /[!@#$%^&*]/.test(
+          signupForm.value.password
+        );
+        const containsUpperCase = /[A-Z]/.test(signupForm.value.password);
+        const containsLowerCase = /[a-z]/.test(signupForm.value.password);
+        const containsNumber = /\d/.test(signupForm.value.password);
+
+        const valid =
+          signupForm.value.confirmPassword === signupForm.value.password &&
+          !hasSpaces &&
+          validLength &&
+          containsSpecialChar &&
+          containsUpperCase &&
+          containsLowerCase &&
+          containsNumber;
+
+        resolve(valid);
+      });
+    };
+
+    return {
+      session,
+      signupForm,
+      signupRules,
+      register,
+      validateConfirmPassword,
+    };
   },
 };
 </script>

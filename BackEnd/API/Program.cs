@@ -46,6 +46,8 @@ namespace FinalAPI
             // Our Services
             builder.Services.AddScoped<IMailService, MailService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IDataService, DataService>();
+
 
             //Our DataBase
             builder.Services.AddDbContext<DataContext>(options =>

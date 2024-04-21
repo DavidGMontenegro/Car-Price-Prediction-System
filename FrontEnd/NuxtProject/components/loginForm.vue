@@ -33,12 +33,6 @@
             </el-button>
           </el-form-item>
         </el-form>
-
-        <div class="links-container">
-          <router-link to="/forgot-password" class="link">
-            Recover Password
-          </router-link>
-        </div>
       </el-card>
     </div>
   </div>
@@ -80,7 +74,7 @@ export default {
     };
   },
   methods: {
-    encrypt(text: String) {
+    encrypt(text: string) {
       return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
     },
     async login() {
@@ -101,27 +95,6 @@ export default {
         console.error("Failed login", error);
         // Aquí puedes manejar el error, como mostrar un mensaje al usuario.
       }
-    },
-    async validateFields() {
-      return await new Promise((resolve) => {
-        const hasSpaces = /\s/.test(newPassword.value);
-        const validLength = newPassword.value.length >= 5;
-        const containsSpecialChar = /[!@#$%^&*]/.test(newPassword.value);
-        const containsUpperCase = /[A-Z]/.test(newPassword.value);
-        const containsLowerCase = /[a-z]/.test(newPassword.value);
-        const containsNumber = /\d/.test(newPassword.value);
-
-        const valid =
-          newPassword.value === confirmPassword.value &&
-          !hasSpaces &&
-          validLength &&
-          containsSpecialChar &&
-          containsUpperCase &&
-          containsLowerCase &&
-          containsNumber;
-
-        resolve(valid);
-      });
     },
   },
 };
