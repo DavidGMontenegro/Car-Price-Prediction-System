@@ -87,7 +87,6 @@ export default {
 
         const sessionStore = useSessionStore();
         sessionStore.login(this.loginForm.username);
-        console.log("Login successful:", response.data);
         this.$router.push("/dashboard");
 
         // Aquí puedes manejar la respuesta del backend, como almacenar el token de sesión en el almacenamiento local o redirigir a otra página.

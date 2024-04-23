@@ -18,13 +18,3 @@ export const transmissionTypeEndPoint = "http://" + ip + "/api/Data/transmission
 export const priceByYearEndPoint = "http://" + ip + "/api/Data/price-trend-by-year";
 export const fuelTypeEndPoint = "http://" + ip + "/api/Data/fuel-type-distribution";
 export const yearDistributionEndPoint = "http://" + ip + "/api/Data/year-distribution";
-
-
-//http://localhost:5076/api/Users/change-user-password?username=nuevo&oldPassword=sdfg&newPassword=sdfg
-//http://localhost:5076/api/Users/change-user-picture?username=asdf
-//http://localhost:5076/api/Users/modify-user-data?oldUsername=sdfg&newUsername=sdfg&newEmail=sdfg
-
-
-
-
-//http://localhost:5076/api/Mail/send-email?mailFrom=d&subject=d&body=d

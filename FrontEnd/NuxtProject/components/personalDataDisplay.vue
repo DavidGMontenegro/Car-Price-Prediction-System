@@ -69,6 +69,7 @@ const email = ref("");
 const oldProfileImageUrl = ref("");
 const editedUsername = ref("");
 const editedEmail = ref("");
+const imageFormData = ref(new FormData());
 
 const fetchUserData = async () => {
   try {
@@ -93,21 +94,51 @@ const uploadProfilePicture = () => {
   }
 };
 
-const handleFileUpload = (event: any) => {
+const handleFileUpload = async (event: any) => {
   const file = event.target.files[0];
   editing.value = true;
   const reader = new FileReader();
 
-  reader.onload = (event) => {
+  reader.onload = async (event) => {
     if (event.target != null) {
       const base64String = event.target.result as string;
-      console.log("Base64 de la imagen:", base64String);
-      profileImageUrl.value = base64String;
+
+      const image = new Image();
+      // Set the image source *after* the onload event finishes
+      image.onload = async () => {
+        const isSquareLike = checkSquareRatio(image.width, image.height);
+        if (!isSquareLike) {
+          alert(
+            "La imagen debe tener un formato más cuadrado. Por favor, seleccione otra imagen." +
+              image.width +
+              " x " +
+              image.height
+          );
+        } else {
+          // La imagen es cuadrada, you can continue with the processing
+          profileImageUrl.value = base64String;
+
+          const blob = await fetch(base64String).then((res) => res.blob());
+          imageFormData.value = new FormData();
+          imageFormData.value.append("newPicture", blob);
+        }
+      };
+      image.src = base64String;
     }
   };
 
-  reader.readAsDataURL(file);
+  // Make sure to read the file as data URL asynchronously
+  await reader.readAsDataURL(file);
 };
+
+// Function to check if the aspect ratio is within a certain range
+function checkSquareRatio(width: number, height: number) {
+  const threshold = 0.75; // Adjust this value as needed (e.g., 0.9 for stricter)
+  return (
+    (width / height >= threshold && width / height <= 1 / threshold) ||
+    (height / width >= threshold && height / width <= 1 / threshold)
+  );
+}
 
 const toggleEditing = () => {
   editing.value = !editing.value;
@@ -118,12 +149,20 @@ const toggleEditing = () => {
 
 const saveChanges = async () => {
   if (oldProfileImageUrl.value !== profileImageUrl.value) {
-    const response = await axios.put(
-      `${changeProfilePicEndPoint}?username=${username}`,
-      profileImageUrl.value
-    );
-
-    console.log("Imagen actualizada: ", response);
+    try {
+      const response = await axios.put(
+        `${changeProfilePicEndPoint}?username=${username.value}`,
+        imageFormData.value,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Imagen actualizada: ", response);
+    } catch (error) {
+      console.error("Error al actualizar la imagen:", error);
+    }
   }
 
   let finalUsername =
@@ -155,10 +194,11 @@ const saveChanges = async () => {
   background-color: $color-secondary;
   padding: $spacing-medium;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 20px 31px 6px rgba(0, 0, 0, 0.75);
   min-width: 20vw;
   min-height: 50vh;
   justify-content: center;
+  align-items: center;
 }
 
 .profile-picture {
@@ -236,7 +276,7 @@ const saveChanges = async () => {
   border: none;
   border-radius: 4px;
   padding: 8px 16px;
-  margin-top: 0px;
+  margin: 0px 40px;
   cursor: pointer;
 
   &:hover {
@@ -249,6 +289,7 @@ const saveChanges = async () => {
   justify-content: space-between;
   padding: 10px;
   margin-bottom: 30px;
+  align-items: center;
 }
 
 .button-icon {
@@ -257,7 +298,6 @@ const saveChanges = async () => {
 }
 
 .edit-mode-button {
-  background-color: $color-primary;
-  margin-top: $spacing-medium;
+  margin-top: 30px;
 }
 </style>

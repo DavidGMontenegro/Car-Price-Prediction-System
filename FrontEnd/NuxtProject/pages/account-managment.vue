@@ -64,8 +64,7 @@ export default {
 
 .content {
   text-align: center;
-  padding: 20px;
-  min-height: 40vh;
+  min-height: 45vh;
 }
 
 @media (max-width: 768px) {

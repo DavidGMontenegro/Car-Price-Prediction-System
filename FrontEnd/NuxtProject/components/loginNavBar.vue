@@ -7,7 +7,7 @@
       <span v-if="selectedOption === 'LogIn'">Sign Up</span>
       <span v-else>Login</span>
     </div>
-    <div class="arrow">
+    <div class="arrow right">
       <span v-if="selectedOption === 'LogIn'">&gt;</span>
     </div>
   </div>
@@ -46,6 +46,10 @@ export default {
 .arrow {
   color: #ffffff;
   min-width: 100px;
+}
+
+.right {
+  text-align: right;
 }
 
 .arrow {

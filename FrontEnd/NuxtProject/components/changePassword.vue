@@ -73,7 +73,6 @@ export default {
 
       if (valid) {
         try {
-          console.log(session.username);
           const response = await axios.put(
             `${changePasswordEndPoint}?username=${
               session.username

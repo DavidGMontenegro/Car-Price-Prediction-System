@@ -1,17 +1,6 @@
 ﻿using FinalAPI.Models;
 using FinalAPI.Services;
-using log4net;
-using log4net.Config;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalAPI.Controllers
 {
@@ -131,11 +120,18 @@ namespace FinalAPI.Controllers
         }
 
         [HttpPut("change-user-picture")]
-        public async Task<IActionResult> ChangeUserProfilePicture(String username, [FromBody] byte[] newPicture)
+        public async Task<IActionResult> ChangeUserProfilePicture(string username, IFormFile newPicture)
         {
             try
             {
-                var user = await this.userService.ChangeUserProfilePic(username, newPicture);
+                byte[] newProfilePic;
+                using (var memoryStream = new MemoryStream())
+                {
+                    await newPicture.CopyToAsync(memoryStream);
+                    newProfilePic = memoryStream.ToArray();
+                }
+
+                var user = await this.userService.ChangeUserProfilePic(username, newProfilePic);
                 if (user != null)
                 {
                     return Ok(user);
@@ -150,5 +146,6 @@ namespace FinalAPI.Controllers
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
+
     }
 }

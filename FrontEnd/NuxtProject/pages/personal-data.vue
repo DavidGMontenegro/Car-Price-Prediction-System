@@ -7,17 +7,15 @@
         class="background-image"
       />
     </div>
-    <div class="right-section centered">
-      <div class="content">
-        <div v-if="!changePassword" class="user-data-container">
-          <PersonalDataDisplay />
-          <button class="change-password-button" @click="changePassword = true">
-            Cambiar contraseña
-          </button>
-        </div>
-        <div v-else>
-          <ChangePassword @cancel="changePassword = false" />
-        </div>
+    <div class="right-section">
+      <div v-if="!changePassword" class="user-data-container">
+        <PersonalDataDisplay />
+        <button class="change-password-button" @click="changePassword = true">
+          Cambiar contraseña
+        </button>
+      </div>
+      <div v-else>
+        <ChangePassword @cancel="changePassword = false" />
       </div>
     </div>
   </div>
@@ -61,16 +59,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.content {
   text-align: center;
   padding: 20px;
+  width: 500px;
 }
 
 .user-data-container {
-  max-width: 400px;
   margin: 0 auto;
+  min-width: 35vw;
 }
 
 .change-password-button {
@@ -91,15 +87,18 @@ export default {
 
 @media (max-width: 768px) {
   .left-section {
-    display: none;
+    flex: 0;
   }
 
   .right-section {
-    width: 100%;
     background-image: url("https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+  }
+
+  .user-data-container {
+    width: 60vw;
   }
 }
 </style>

@@ -275,3 +275,4 @@ C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Debug\net8
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Debug\net8.0\FinalAPI.pdb
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Debug\net8.0\FinalAPI.genruntimeconfig.cache
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Debug\net8.0\ref\FinalAPI.dll
+C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\bin\Debug\net8.0\SixLabors.ImageSharp.dll
