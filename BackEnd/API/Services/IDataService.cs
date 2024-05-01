@@ -22,5 +22,10 @@ namespace FinalAPI.Services
 
         // Histograma - Distribución de años de los coches
         Task<IDictionary<int, int>> GetYearDistribution();
+        // Get all diferent brands
+        Task<IEnumerable<string>> GetAllCarBrands();
+        // Get all cars from a brand
+        Task<IEnumerable<string>> GetCarsByBrand(string make);
+
     }
 }

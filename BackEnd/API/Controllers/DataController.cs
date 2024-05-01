@@ -94,7 +94,7 @@ namespace FinalAPI.Controllers
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
-
+        
         // Histograma - Distribución de años de los coches
         [HttpGet("year-distribution")]
         public async Task<IActionResult> GetYearDistribution()
@@ -102,6 +102,34 @@ namespace FinalAPI.Controllers
             try
             {
                 var data = await this.dataService.GetYearDistribution();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpGet("get-car-brands")]
+        public async Task<IActionResult> GetAllCarBrands()
+        {
+            try
+            {
+                var data = await this.dataService.GetAllCarBrands();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpGet("get-cars-by-brand")]
+        public async Task<IActionResult> GetCarsByBrand(String make)
+        {
+            try
+            {
+                var data = await this.dataService.GetCarsByBrand(make);
                 return Ok(data);
             }
             catch (Exception ex)

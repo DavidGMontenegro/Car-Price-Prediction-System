@@ -113,4 +113,22 @@ public class DataService : IDataService
         return data.GroupBy(car => car.Year)
                    .ToDictionary(group => group.Key, group => group.Count());
     }
+
+    public async Task<IEnumerable<string>> GetAllCarBrands()
+    {
+        var data = await GetAllData();
+        var uniqueMakes = data.Select(car => car.Make).Distinct();
+        return uniqueMakes;
+    }
+
+    public async Task<IEnumerable<string>> GetCarsByBrand(string make)
+    {
+        var data = await GetAllData();
+        var carsByBrand = data
+            .Where(car => string.Equals(car.Make, make, StringComparison.OrdinalIgnoreCase))
+            .Select(car => car.Model)
+            .OrderBy(model => model, StringComparer.OrdinalIgnoreCase);
+
+        return carsByBrand;
+    }
 }
