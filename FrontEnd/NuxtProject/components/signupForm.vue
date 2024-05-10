@@ -136,26 +136,35 @@ export default {
     async register() {
       this.$refs.signupForm.validate(async (valid) => {
         if (valid) {
-          const response = await axios.post(
-            `${signupEndPoint}?username=${this.signupForm.username.toLowerCase()}&email=${
-              this.signupForm.email
-            }&password=${this.encrypt(this.signupForm.password)}`
-          );
+          try {
+            const response = await axios.post(
+              `${signupEndPoint}?username=${this.signupForm.username.toLowerCase()}&email=${
+                this.signupForm.email
+              }&password=${this.encrypt(this.signupForm.password)}`
+            );
 
-          await axios.post(
-            `${sendEmailEndPoint}?mailFrom=${this.signupForm.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
-          );
+            await axios.post(
+              `${sendEmailEndPoint}?mailFrom=${this.signupForm.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
+            );
 
-          await axios.post(
-            `${loginEndPoint}?username=${this.signupForm.username.toLowerCase()}&password=${this.encrypt(
-              this.signupForm.password
-            )}`
-          );
+            await axios.post(
+              `${loginEndPoint}?username=${this.signupForm.username.toLowerCase()}&password=${this.encrypt(
+                this.signupForm.password
+              )}`
+            );
 
-          const sessionStore = useSessionStore();
-          sessionStore.login(this.signupForm.username.toLowerCase());
+            const sessionStore = useSessionStore();
+            sessionStore.login(this.signupForm.username.toLowerCase());
 
-          this.$router.push("/dashboard");
+            this.$router.push("/dashboard");
+          } catch (error) {
+            console.error("Failed signup", error);
+            if (error.response.status === 409) {
+              this.$message.error("Username or password already in use.");
+            } else {
+              this.$message.error("An error ocurred. Try again later...");
+            }
+          }
         } else {
           console.log("Not valid form");
         }

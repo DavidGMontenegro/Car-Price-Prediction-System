@@ -90,7 +90,7 @@ export default {
           newPassword.value = "";
           confirmPassword.value = "";
         } catch (error) {
-          console.error("Failed to fetch user data", error);
+          this.$message.error("An error ocurred. Try again later...");
         }
       }
     };

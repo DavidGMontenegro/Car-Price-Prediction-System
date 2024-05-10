@@ -60,6 +60,7 @@ import {
   changeProfilePicEndPoint,
   modifyUserDataEndPoint,
 } from "~/constants/endpoints";
+import { ElMessage } from "element-plus";
 
 const session = useSessionStore();
 const username = ref(session.username);
@@ -161,7 +162,9 @@ const saveChanges = async () => {
       );
       console.log("Imagen actualizada: ", response);
     } catch (error) {
-      console.error("Error al actualizar la imagen:", error);
+      ElMessage.error(
+        "An error ocurred changing the image. Try again later..."
+      );
     }
   }
 
@@ -175,7 +178,9 @@ const saveChanges = async () => {
       `${modifyUserDataEndPoint}?oldUsername=${username.value}&newUsername=${finalUsername}&newEmail=${finalEmail}`
     );
   } catch (error) {
-    console.error("Error al guardar los cambios:", error);
+    ElMessage.error(
+      "An error ocurred while saving new data. Try again later..."
+    );
   }
 
   oldProfileImageUrl.value = profileImageUrl.value;

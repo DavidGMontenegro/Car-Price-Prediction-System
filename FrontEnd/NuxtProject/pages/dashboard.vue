@@ -1,18 +1,15 @@
 <template>
   <div class="graph-container">
-    <select v-model="selectedGraph" class="select-graph">
-      <option value="YearDistribution">Distribución por año</option>
-      <option value="PriceTrendByYear">Tendencia de precios</option>
-      <option value="PriceDistributionByMake">
-        Distribución de precios por marca
-      </option>
-      <option value="TransmissionTypeDistribution">
-        Distribución de tipos de transmisión
-      </option>
-      <option value="FuelTypeDistribution">
-        Distribución de tipos de combustible
-      </option>
-    </select>
+    <div class="header">
+      <h1>Car Analytics Dashboard</h1>
+      <p>Explore insights into car data with interactive graphs.</p>
+    </div>
+    <el-select-v2
+      v-model="selectedGraph"
+      :options="options"
+      placeholder="Please select"
+      style="width: 240px"
+    />
     <component :is="selectedGraph" class="graph" />
   </div>
 </template>
@@ -36,9 +33,21 @@ export default {
     definePageMeta({
       middleware: "auth",
     });
-
     return {
-      selectedGraph: "YearDistribution", // Por defecto muestra la distribución por año
+      selectedGraph: "YearDistribution",
+      options: [
+        { value: "YearDistribution", label: "Year Price Distribution" },
+        { value: "PriceTrendByYear", label: "Price Trend by Year" },
+        {
+          value: "PriceDistributionByMake",
+          label: "Price Distribution by Make",
+        },
+        {
+          value: "TransmissionTypeDistribution",
+          label: "Transmission Type Distribution",
+        },
+        { value: "FuelTypeDistribution", label: "Fuel Type Distribution" },
+      ],
     };
   },
 };
@@ -49,15 +58,36 @@ export default {
 
 .graph-container {
   background-color: $color-background;
-  padding: $spacing-medium;
   border-radius: 8px;
-  margin: 5vh auto 30vh auto;
+  margin: 5vh auto 40vh auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   max-height: 65vh;
-  /* Limitar el ancho del contenedor del gráfico */
-  max-width: 90%; /* Puedes ajustar este valor según tus necesidades */
+  max-width: 90%;
+}
+
+.el-select-v2 {
+  background-color: $color-primary;
+  border-color: $color-primary; // Change border color
+  .el-select-v2__selection {
+    color: white; // Adjust text color for contrast
+  }
+  .el-select-v2__caret {
+    fill: $color-primary; // Change caret color
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 5vh;
+  color: $color-secondary;
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: $spacing-medium;
+    color: $color-primary;
+  }
 }
 
 .select-graph {

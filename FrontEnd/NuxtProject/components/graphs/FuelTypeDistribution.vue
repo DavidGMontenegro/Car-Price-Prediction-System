@@ -27,12 +27,12 @@ export default {
         .getElementById("fuelTypeDistributionChart")
         .getContext("2d");
       new Chart(ctx, {
-        type: "pie", // Tipo de gráfico circular (pie chart)
+        type: "pie", // Pie chart type
         data: {
           labels: Object.keys(data),
           datasets: [
             {
-              label: "Distribución de tipos de combustible",
+              label: "Fuel Type Distribution",
               data: Object.values(data),
               backgroundColor: [
                 "rgba(255, 99, 132, 0.75)",
@@ -62,7 +62,7 @@ export default {
             },
             title: {
               display: true,
-              text: "Distribución de tipos de combustible",
+              text: "Fuel Type Distribution",
             },
           },
         },

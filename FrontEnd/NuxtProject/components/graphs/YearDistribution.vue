@@ -35,7 +35,7 @@ export default {
           labels: data.labels,
           datasets: [
             {
-              label: "Distribución de años de los coches",
+              label: "Cars Year Distribution",
               backgroundColor: "#f96182",
               borderColor: "#f96182",
               data: data.data,
@@ -47,14 +47,14 @@ export default {
             x: {
               title: {
                 display: true,
-                text: "Años de los coches",
+                text: "Car Years",
               },
             },
             y: {
               beginAtZero: true,
               title: {
                 display: true,
-                text: "Cantidad de coches",
+                text: "Number of Cars",
               },
             },
           },

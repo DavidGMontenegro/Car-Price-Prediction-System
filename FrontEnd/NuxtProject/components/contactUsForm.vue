@@ -74,7 +74,7 @@ export default {
         this.isFormVisible = false;
         console.log(response);
       } catch (error) {
-        console.log("Error sending the email.", error);
+        this.$message.error("An error ocurred. Try again later...");
       }
     },
     scrollToBottom() {

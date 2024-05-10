@@ -41,7 +41,7 @@ export default {
           labels: data.labels,
           datasets: [
             {
-              label: "Distribución de tipos de transmisión",
+              label: "Transmission Type Distribution",
               backgroundColor: [
                 "rgb(255, 99, 132)",
                 "rgb(54, 162, 235)",

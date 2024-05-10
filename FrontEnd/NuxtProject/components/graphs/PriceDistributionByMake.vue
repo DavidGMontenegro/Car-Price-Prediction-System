@@ -37,7 +37,7 @@ export default {
         data: {
           datasets: [
             {
-              label: "Precio por marca",
+              label: "Price by make",
               backgroundColor: "#f96182",
               borderColor: "#f96182",
               data: data.labels.map((label, index) => ({

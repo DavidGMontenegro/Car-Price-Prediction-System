@@ -26,19 +26,24 @@ export default {
       }
     },
     updateChart(data) {
-      const priceTrendByYearChart = new Chart(document.getElementById('priceTrendByYearChart'), {
-        type: 'line',
-        data: {
-          labels: data.labels,
-          datasets: [{
-            label: "Price Trend By Year",
-            backgroundColor: '#f96182',
-            borderColor: '#f96182',
-            data: data.data
-          }]
-        },
-        options: {}
-      });
+      const priceTrendByYearChart = new Chart(
+        document.getElementById("priceTrendByYearChart"),
+        {
+          type: "line",
+          data: {
+            labels: data.labels,
+            datasets: [
+              {
+                label: "Price Trend By Year",
+                backgroundColor: "#f96182",
+                borderColor: "#f96182",
+                data: data.data,
+              },
+            ],
+          },
+          options: {},
+        }
+      );
     },
   },
 };

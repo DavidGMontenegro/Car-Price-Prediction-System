@@ -92,7 +92,10 @@ export default {
         // Aquí puedes manejar la respuesta del backend, como almacenar el token de sesión en el almacenamiento local o redirigir a otra página.
       } catch (error) {
         console.error("Failed login", error);
-        // Aquí puedes manejar el error, como mostrar un mensaje al usuario.
+        if (error.response.status === 401) {
+          this.$message.error("Invalid username or password");
+          this.loginForm.password = ""; // Borra la contraseña
+        }
       }
     },
   },
