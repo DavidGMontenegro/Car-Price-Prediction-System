@@ -63,15 +63,17 @@ export default {
       }
     };
 
+    // Fetch data only on initial mount and when username changes
     watch(
-      () => session.isLoggedIn,
-      (isLoggedIn) => {
-        if (isLoggedIn) {
-          fetchUserData();
+      () => session.username,
+      async (username) => {
+        if (username && session.isLoggedIn) {
+          await fetchUserData();
         } else {
-          profileImageUrl.value = "";
+          profileImageUrl.value = ""; // Clear image if not logged in or username changes
         }
-      }
+      },
+      { immediate: true } // Fetch data on initial mount
     );
 
     return { session, profileImageUrl };

@@ -4,18 +4,18 @@ export const useSessionStore = defineStore({
   id: 'session',
   state: () => ({
     isLoggedIn: false,
-    username: '', // Nuevo campo para almacenar el nombre de usuario
+    username: '',
   }),
   actions: {
     login(username: string) {
-      // Lógica para iniciar sesión
+      localStorage.username = username;
       this.isLoggedIn = true;
-      this.username = username; // Almacena el nombre de usuario
+      this.username = username;
     },
     logout() {
-      // Lógica para cerrar sesión
+      localStorage.removeItem('username');
       this.isLoggedIn = false;
-      this.username = ''; // Resetea el nombre de usuario al cerrar sesión
+      this.username = '';
     },
   },
 });

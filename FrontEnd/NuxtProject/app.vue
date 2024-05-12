@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <Nav></Nav>
+    <Nav />
     <NuxtPage class="nuxt-page" />
     <Footer />
   </div>
@@ -9,6 +9,25 @@
 <script setup>
 import Nav from "@/components/nav.vue";
 import Footer from "@/components/footer.vue";
+import { useSessionStore } from "~/stores/session";
+
+const sessionStore = useSessionStore();
+
+async function handleLogin() {
+  if (process.client) {
+    const username = localStorage.getItem("username");
+    if (username) {
+      try {
+        sessionStore.login(username);
+        //emit("load-profile-image");
+      } catch (error) {
+        console.error(`Login error: ${error.message}`);
+      }
+    }
+  }
+}
+
+handleLogin();
 </script>
 
 <style lang="scss">

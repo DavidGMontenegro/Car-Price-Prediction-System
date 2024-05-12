@@ -137,5 +137,33 @@ namespace FinalAPI.Controllers
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
+
+        [HttpGet("powers")]
+        public async Task<IActionResult> GetPowers(string brand, string model)
+        {
+            try
+            {
+                var powers = await dataService.GetPowersByBrandAndModel(brand, model);
+                return Ok(powers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpGet("colors")]
+        public async Task<IActionResult> GetColors(string brand, string model)
+        {
+            try
+            {
+                var colors = await dataService.GetColorsByBrandAndModel(brand, model);
+                return Ok(colors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
     }
 }

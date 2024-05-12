@@ -131,4 +131,45 @@ public class DataService : IDataService
 
         return carsByBrand;
     }
+
+    public async Task<IEnumerable<string>> GetPowersByBrandAndModel(string brand, string model)
+    {
+        try
+        {
+            var data = await GetAllData();
+            var powers = data
+                .Where(car => string.Equals(car.Make, brand, StringComparison.OrdinalIgnoreCase) &&
+                              string.Equals(car.Model, model, StringComparison.OrdinalIgnoreCase))
+                .Select(car => car.MaxPower)
+                .Distinct()
+                .OrderBy(power => power, StringComparer.OrdinalIgnoreCase);
+
+            return powers;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error retrieving powers for brand '{brand}' and model '{model}': {ex.Message}");
+        }
+    }
+
+    public async Task<IEnumerable<string>> GetColorsByBrandAndModel(string brand, string model)
+    {
+        try
+        {
+            var data = await GetAllData();
+            var colors = data
+                .Where(car => string.Equals(car.Make, brand, StringComparison.OrdinalIgnoreCase) &&
+                              string.Equals(car.Model, model, StringComparison.OrdinalIgnoreCase))
+                .Select(car => car.Color)
+                .Distinct()
+                .OrderBy(color => color, StringComparer.OrdinalIgnoreCase);
+
+            return colors;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error retrieving colors for brand '{brand}' and model '{model}': {ex.Message}");
+        }
+    }
+
 }

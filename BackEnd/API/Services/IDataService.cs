@@ -26,6 +26,8 @@ namespace FinalAPI.Services
         Task<IEnumerable<string>> GetAllCarBrands();
         // Get all cars from a brand
         Task<IEnumerable<string>> GetCarsByBrand(string make);
+        Task<IEnumerable<string>> GetPowersByBrandAndModel(string brand, string model);
 
+        Task<IEnumerable<string>> GetColorsByBrandAndModel(string brand, string model);
     }
 }
