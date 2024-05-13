@@ -11,25 +11,26 @@ namespace FinalAPI.Controllers
     [Route("api/[controller]")]
     public class PricePredictorController : ControllerBase
     {
-        private readonly IPricePredictor _fileService;
+        private readonly IPricePredictor pricePredictor;
 
-        public PricePredictorController(IPricePredictor fileService)
+        public PricePredictorController(IPricePredictor pricePredictor)
         {
-            _fileService = fileService;
+            this.pricePredictor = pricePredictor;
         }
 
-        [HttpPost("execute-notebook")]
-        public async Task<IActionResult> ExecuteNotebook([FromBody] dynamic parameters)
+        [HttpPost("predict-price")]
+        public async Task<IActionResult> PredictPrice([FromBody] CarParameters parameters)
         {
             try
             {
-                string notebookPath = "ruta/al/notebook.ipynb";
-                await _fileService.ExecuteNotebook(notebookPath, parameters);
-                return Ok("Notebook executed successfully");
+                // Aquí podrías llamar a tu servicio para hacer la predicción del precio del coche
+                var precioPredicho = await pricePredictor.PredictPrice(parameters);
+
+                return Ok(new { precio = precioPredicho });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
     }

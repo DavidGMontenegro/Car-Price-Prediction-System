@@ -69,12 +69,12 @@ export default {
 
 .el-select-v2 {
   background-color: $color-primary;
-  border-color: $color-primary; // Change border color
+  border-color: $color-primary;
   .el-select-v2__selection {
-    color: white; // Adjust text color for contrast
+    color: white;
   }
   .el-select-v2__caret {
-    fill: $color-primary; // Change caret color
+    fill: $color-primary;
   }
 }
 
@@ -84,7 +84,7 @@ export default {
   color: $color-secondary;
 
   h1 {
-    font-size: 36px;
+    font-size: $font-size-extra-large;
     margin-bottom: $spacing-medium;
     color: $color-primary;
   }
@@ -106,7 +106,6 @@ export default {
 
 .graph {
   margin-top: $spacing-medium;
-  /* Limitar el ancho del gráfico */
-  max-width: 100%; /* Asegura que el gráfico ocupe todo el ancho disponible */
+  max-width: 100%;
 }
 </style>

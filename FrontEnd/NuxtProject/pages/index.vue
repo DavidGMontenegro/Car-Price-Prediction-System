@@ -55,7 +55,7 @@ export default {
 .home-page {
   min-height: 100vh;
   margin: 0 auto;
-  padding: 20px;
+  padding: $spacing-large;
   color: $color-secondary;
 
   .header {
@@ -63,7 +63,7 @@ export default {
     margin-bottom: 10vh;
 
     h1 {
-      font-size: 36px;
+      font-size: $font-size-extra-large;
       margin-bottom: $spacing-medium;
       color: $color-primary;
     }
@@ -76,7 +76,7 @@ export default {
 
     .description {
       flex: 1;
-      padding: 0 20px;
+      padding: 0 $spacing-large;
 
       h2 {
         font-size: $font-size-large;
@@ -87,7 +87,6 @@ export default {
 
     .carousel {
       flex: 0.75;
-      max-width: 800px;
     }
   }
 

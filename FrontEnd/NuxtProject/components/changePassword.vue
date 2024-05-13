@@ -1,45 +1,55 @@
 <template>
+  <!-- Password change form component -->
   <div class="password-change-form">
     <div class="password-change-buttons">
+      <!-- Button to cancel password change -->
       <el-button @click="$emit('cancel')" class="password-change-button">
+        <!-- Icon for cancel button -->
         <img
           src="@/assets/images/GoBackArrow.png"
           alt="Cancelar"
           class="button-icon"
         />
       </el-button>
+      <!-- Title for password change form -->
       <p>Change Password</p>
+      <!-- Button to save password changes -->
       <el-button @click="saveChanges" class="password-change-button">
+        <!-- Icon for save button -->
         <img src="@/assets/images/Done.png" alt="Guardar" class="button-icon" />
       </el-button>
     </div>
+    <!-- Form for changing password -->
     <el-form
       label-position="top"
       style="max-width: 600px"
       :rules="changePasswordRules"
     >
-      <el-form-item label="Contraseña actual" prop="actualPassword">
+      <!-- Input for current password -->
+      <el-form-item label="Current Password" prop="actualPassword">
         <el-input
           type="password"
           v-model="currentPassword"
           clearable
-          placeholder="Contraseña actual"
+          placeholder="Current Password"
         ></el-input>
       </el-form-item>
-      <el-form-item label="Nueva contraseña" prop="nwePassword">
+      <!-- Input for new password -->
+      <el-form-item label="New Password" prop="nwePassword">
         <el-input
           type="password"
           v-model="newPassword"
           clearable
-          placeholder="Nueva contraseña"
+          placeholder="New Password"
         ></el-input>
       </el-form-item>
-      <el-form-item label="Confirmar nueva contraseña" prop="repeatPassword">
+      <!-- Input for confirming new password -->
+      <el-form-item label="Confirm New Password" prop="repeatPassword">
         <el-input
           type="password"
           v-model="confirmPassword"
           clearable
-          placeholder="Confirmar nueva contraseña"
+          placeholder="Confirm New Password"
         ></el-input>
       </el-form-item>
     </el-form>
@@ -47,6 +57,7 @@
 </template>
 
 <script lang="ts">
+// Importing necessary modules and libraries
 import { ref } from "vue";
 import axios from "axios";
 import {
@@ -59,20 +70,25 @@ import { signUpEmailTemplate } from "~/constants/emails";
 
 export default {
   setup() {
+    // Define reactive variables for password inputs and session
     const currentPassword = ref("");
     const newPassword = ref("");
     const confirmPassword = ref("");
     const session = useSessionStore();
 
+    // Function to encrypt password
     const encrypt = (text: string) => {
       return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
     };
 
+    // Function to save password changes
     const saveChanges = async () => {
+      // Validate form fields
       const valid = await validateFields();
 
       if (valid) {
         try {
+          // Send request to update password
           const response = await axios.put(
             `${changePasswordEndPoint}?username=${
               session.username
@@ -81,22 +97,26 @@ export default {
             )}&newPassword=${encrypt(newPassword.value)}`
           );
 
+          // Send confirmation email
           await axios.post(
             `${sendEmailEndPoint}?mailFrom=${session.username}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
           );
 
-          // Limpiar los campos después de un cambio de contraseña exitoso
+          // Clear fields after successful password change
           currentPassword.value = "";
           newPassword.value = "";
           confirmPassword.value = "";
         } catch (error) {
+          // Display error message if request fails
           this.$message.error("An error ocurred. Try again later...");
         }
       }
     };
 
+    // Function to validate form fields
     const validateFields = async () => {
       return await new Promise((resolve) => {
+        // Validation logic
         const hasSpaces = /\s/.test(newPassword.value);
         const validLength = newPassword.value.length >= 5;
         const containsSpecialChar = /[!@#$%^&*]/.test(newPassword.value);
@@ -122,6 +142,7 @@ export default {
       newPassword,
       confirmPassword,
       saveChanges,
+      // Rules for form validation
       changePasswordRules: {
         oldPassword: [
           {
@@ -131,7 +152,7 @@ export default {
           },
           {
             min: 6,
-            message: "La contraseña debe tener al menos 6 caracteres",
+            message: "Password must be at least 6 characters long",
             trigger: "blur",
           },
         ],
@@ -143,7 +164,7 @@ export default {
           },
           {
             min: 6,
-            message: "La contraseña debe tener al menos 6 caracteres",
+            message: "Password must be at least 6 characters long",
             trigger: "blur",
           },
         ],
@@ -155,7 +176,7 @@ export default {
           },
           {
             min: 6,
-            message: "La contraseña debe tener al menos 6 caracteres",
+            message: "Password must be at least 6 characters long",
             trigger: "blur",
           },
         ],
@@ -193,7 +214,7 @@ export default {
 .password-change-buttons {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: $spacing-small;
   margin-bottom: 30px;
   align-items: center;
 }
@@ -203,7 +224,7 @@ export default {
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 8px 16px;
+  padding: $spacing-small $spacing-large;
   margin-top: 0px;
   cursor: pointer;
 

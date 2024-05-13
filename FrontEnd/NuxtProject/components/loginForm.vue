@@ -1,8 +1,12 @@
 <template>
+  <!-- Login container -->
   <div class="login-container">
     <div class="right-section">
+      <!-- Login card -->
       <el-card class="login-card">
+        <!-- Login title -->
         <h2 class="login-title">Log In</h2>
+        <!-- Login form -->
         <el-form
           ref="loginForm"
           :model="loginForm"
@@ -10,6 +14,7 @@
           label-width="0"
           class="login-form"
         >
+          <!-- Username input -->
           <el-form-item prop="username" class="form-item">
             <el-input
               v-model="loginForm.username"
@@ -18,6 +23,7 @@
               prefix-icon="User"
             ></el-input>
           </el-form-item>
+          <!-- Password input -->
           <el-form-item prop="password" class="form-item">
             <el-input
               v-model="loginForm.password"
@@ -27,6 +33,7 @@
               prefix-icon="lock"
             ></el-input>
           </el-form-item>
+          <!-- Login button -->
           <el-form-item>
             <el-button type="primary" @click="login" class="login-button">
               Log In
@@ -39,6 +46,7 @@
 </template>
 
 <script lang="ts">
+// Importing necessary modules and constants
 import { loginEndPoint } from "~/constants/endpoints";
 import axios from "axios";
 import CryptoJS from "crypto-js";
@@ -46,11 +54,13 @@ import { useSessionStore } from "~/stores/session";
 
 export default {
   setup() {
+    // Getting session store
     const session = useSessionStore();
     return { session };
   },
   data() {
     return {
+      // Form data and validation rules
       loginForm: {
         username: "",
         password: "",
@@ -74,27 +84,31 @@ export default {
     };
   },
   methods: {
+    // Method to encrypt password
     encrypt(text: string) {
       return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
     },
+    // Method to handle login
     async login() {
       try {
+        // Sending login request
         const response = await axios.post(
           `${loginEndPoint}?username=${this.loginForm.username.toLowerCase()}&password=${this.encrypt(
             this.loginForm.password
           )}`
         );
-
+        // Updating session and redirecting on successful login
         const sessionStore = useSessionStore();
         sessionStore.login(this.loginForm.username);
         this.$router.push("/dashboard");
 
-        // Aquí puedes manejar la respuesta del backend, como almacenar el token de sesión en el almacenamiento local o redirigir a otra página.
+        // Handle backend response, e.g., store session token in local storage or redirect to another page.
       } catch (error) {
+        // Handling login failure
         console.error("Failed login", error);
         if (error.response.status === 401) {
           this.$message.error("Invalid username or password");
-          this.loginForm.password = ""; // Borra la contraseña
+          this.loginForm.password = ""; // Clear password
         }
       }
     },
@@ -148,22 +162,5 @@ export default {
 
 .login-button:hover {
   background-color: darken($color-primary, 10%);
-}
-
-.links-container {
-  margin-top: $spacing-small;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-.link {
-  color: darken($color-primary, 25%);
-  margin-right: $spacing-small;
-  text-decoration: none;
-}
-
-.link:last-child {
-  margin-right: 0;
 }
 </style>

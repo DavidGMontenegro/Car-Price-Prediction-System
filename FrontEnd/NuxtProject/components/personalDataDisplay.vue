@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { useSessionStore } from "~/stores/session";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 import {
   getUserDataEndPoint,
@@ -62,6 +62,7 @@ import {
 } from "~/constants/endpoints";
 import { ElMessage } from "element-plus";
 
+// Variables reactivas
 const session = useSessionStore();
 const username = ref(session.username);
 const editing = ref(false);
@@ -72,12 +73,12 @@ const editedUsername = ref("");
 const editedEmail = ref("");
 const imageFormData = ref(new FormData());
 
+// Función para obtener los datos del usuario
 const fetchUserData = async () => {
   try {
     const response = await axios.get(
       `${getUserDataEndPoint}?username=${username.value}`
     );
-
     email.value = response.data.email;
     profileImageUrl.value = `data:image/png;base64,${response.data.profilePicture}`;
     oldProfileImageUrl.value = profileImageUrl.value;
@@ -86,15 +87,16 @@ const fetchUserData = async () => {
   }
 };
 
+// Inicialización de los datos del usuario
 fetchUserData();
 
+// Función para cargar una imagen de perfil
 const uploadProfilePicture = () => {
   const fileInput = document.getElementById("fileid");
-  if (fileInput) {
-    fileInput.click();
-  }
+  if (fileInput) fileInput.click();
 };
 
+// Maneja la subida de un archivo de imagen
 const handleFileUpload = async (event: any) => {
   const file = event.target.files[0];
   editing.value = true;
@@ -105,7 +107,7 @@ const handleFileUpload = async (event: any) => {
       const base64String = event.target.result as string;
 
       const image = new Image();
-      // Set the image source *after* the onload event finishes
+      // Setea la fuente de la imagen después de que finaliza el evento onload
       image.onload = async () => {
         const isSquareLike = checkSquareRatio(image.width, image.height);
         if (!isSquareLike) {
@@ -116,7 +118,7 @@ const handleFileUpload = async (event: any) => {
               image.height
           );
         } else {
-          // La imagen es cuadrada, you can continue with the processing
+          // Si la imagen es cuadrada, continúa con el procesamiento
           profileImageUrl.value = base64String;
 
           const blob = await fetch(base64String).then((res) => res.blob());
@@ -128,19 +130,20 @@ const handleFileUpload = async (event: any) => {
     }
   };
 
-  // Make sure to read the file as data URL asynchronously
+  // Asegura que el archivo se lea como una URL de datos de forma asíncrona
   await reader.readAsDataURL(file);
 };
 
-// Function to check if the aspect ratio is within a certain range
+// Función para comprobar si la relación de aspecto está dentro de un rango determinado
 function checkSquareRatio(width: number, height: number) {
-  const threshold = 0.75; // Adjust this value as needed (e.g., 0.9 for stricter)
+  const threshold = 0.75; // Ajusta este valor según sea necesario (por ejemplo, 0.9 para ser más estricto)
   return (
     (width / height >= threshold && width / height <= 1 / threshold) ||
     (height / width >= threshold && height / width <= 1 / threshold)
   );
 }
 
+// Alternar el modo de edición
 const toggleEditing = () => {
   editing.value = !editing.value;
   editedEmail.value = "";
@@ -148,17 +151,14 @@ const toggleEditing = () => {
   profileImageUrl.value = oldProfileImageUrl.value;
 };
 
+// Guardar cambios realizados
 const saveChanges = async () => {
   if (oldProfileImageUrl.value !== profileImageUrl.value) {
     try {
       const response = await axios.put(
         `${changeProfilePicEndPoint}?username=${username.value}`,
         imageFormData.value,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
       console.log("Imagen actualizada: ", response);
     } catch (error) {
@@ -168,10 +168,8 @@ const saveChanges = async () => {
     }
   }
 
-  let finalUsername =
-    editedUsername.value.length === 0 ? username.value : editedUsername.value;
-  let finalEmail =
-    editedEmail.value.length === 0 ? email.value : editedEmail.value;
+  const finalUsername = editedUsername.value || username.value;
+  const finalEmail = editedEmail.value || email.value;
 
   try {
     const response = await axios.put(

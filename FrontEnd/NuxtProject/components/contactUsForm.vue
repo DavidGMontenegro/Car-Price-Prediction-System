@@ -1,5 +1,7 @@
 <template>
+  <!-- Contact button and form container -->
   <div>
+    <!-- Button to toggle visibility of contact form -->
     <div
       class="contact-button"
       @click="toggleFormVisible"
@@ -7,10 +9,13 @@
     >
       <span>Contact Us</span>
     </div>
+    <!-- Contact form -->
     <div v-if="isFormVisible" class="contact-form" ref="form">
+      <!-- Close button for the form -->
       <div class="close-button" @click="toggleFormVisible">
         <span>&#10005;</span>
       </div>
+      <!-- Form fields -->
       <div class="form-group">
         <el-input v-model="formData.name" placeholder="Name" required />
       </div>
@@ -30,6 +35,7 @@
           required
         />
       </div>
+      <!-- Button to submit the form -->
       <div class="button-container">
         <el-button type="primary" @click="submitForm">Send Message</el-button>
       </div>
@@ -38,34 +44,42 @@
 </template>
 
 <script lang="ts">
+// Importing necessary modules and constants
 import { sendEmailEndPoint } from "~/constants/endpoints";
 import axios from "axios";
 
 export default {
   data() {
     return {
+      // Form data
       formData: {
         name: "",
         email: "",
         message: "",
       },
+      // Flag to control form visibility
       isFormVisible: false,
     };
   },
   methods: {
+    // Method to toggle form visibility
     toggleFormVisible() {
       this.isFormVisible = !this.isFormVisible;
       if (this.isFormVisible) {
+        // Scroll to bottom when form is opened
         this.$nextTick(() => {
           this.scrollToBottom();
         });
       }
     },
+    // Method to submit the form
     async submitForm() {
       try {
+        // Sending form data via axios
         const response = await axios.post(
           `${sendEmailEndPoint}?mailFrom=dsfinalproject@outlook.com&subject=${this.formData.name}_${this.formData.email}&body=${this.formData.message}`
         );
+        // Resetting form data and hiding form on successful submission
         this.formData = {
           name: "",
           email: "",
@@ -74,9 +88,11 @@ export default {
         this.isFormVisible = false;
         console.log(response);
       } catch (error) {
+        // Displaying error message on failure
         this.$message.error("An error ocurred. Try again later...");
       }
     },
+    // Method to scroll to bottom of the page
     scrollToBottom() {
       const form = this.$refs.form;
       window.scrollTo({

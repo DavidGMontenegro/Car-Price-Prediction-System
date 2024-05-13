@@ -117,7 +117,7 @@ public class DataService : IDataService
     public async Task<IEnumerable<string>> GetAllCarBrands()
     {
         var data = await GetAllData();
-        var uniqueMakes = data.Select(car => car.Make).Distinct();
+        var uniqueMakes = data.Select(car => car.Make).Distinct().OrderBy(make => make, StringComparer.OrdinalIgnoreCase);
         return uniqueMakes;
     }
 
@@ -127,6 +127,7 @@ public class DataService : IDataService
         var carsByBrand = data
             .Where(car => string.Equals(car.Make, make, StringComparison.OrdinalIgnoreCase))
             .Select(car => car.Model)
+            .Distinct()
             .OrderBy(model => model, StringComparer.OrdinalIgnoreCase);
 
         return carsByBrand;

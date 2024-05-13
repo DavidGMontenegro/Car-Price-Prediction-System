@@ -11,7 +11,7 @@
       <div v-if="!changePassword" class="user-data-container">
         <PersonalDataDisplay />
         <button class="change-password-button" @click="changePassword = true">
-          Cambiar contraseña
+          Change password
         </button>
       </div>
       <div v-else>
@@ -38,7 +38,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/styles/variables.scss";
+
 .custom-container {
   display: flex;
   height: 100vh;
@@ -60,7 +62,7 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 20px;
+  padding: $spacing-large;
   width: 500px;
 }
 
@@ -74,11 +76,11 @@ export default {
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: $spacing-small $spacing-large;
+  font-size: $font-size-medium;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px;
+  margin-top: $spacing-large;
 }
 
 .change-password-button:hover {

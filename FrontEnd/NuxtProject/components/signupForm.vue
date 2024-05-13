@@ -2,12 +2,14 @@
   <div class="signup">
     <el-card class="signup-card">
       <h2 class="signup-title">Sign Up</h2>
+      <!-- Sign Up Form -->
       <el-form
         ref="signupForm"
         :model="signupForm"
         :rules="signupRules"
         label-width="0"
       >
+        <!-- Username Field -->
         <el-form-item prop="username" class="form-item">
           <el-input
             v-model="signupForm.username"
@@ -16,6 +18,7 @@
             prefix-icon="user"
           ></el-input>
         </el-form-item>
+        <!-- Email Field -->
         <el-form-item prop="email" class="form-item">
           <el-input
             v-model="signupForm.email"
@@ -24,6 +27,7 @@
             prefix-icon="message"
           ></el-input>
         </el-form-item>
+        <!-- Password Field -->
         <el-form-item prop="password" class="form-item">
           <el-input
             v-model="signupForm.password"
@@ -33,6 +37,7 @@
             prefix-icon="lock"
           ></el-input>
         </el-form-item>
+        <!-- Confirm Password Field -->
         <el-form-item prop="confirmPassword" class="form-item">
           <el-input
             v-model="signupForm.confirmPassword"
@@ -42,6 +47,7 @@
             prefix-icon="lock"
           ></el-input>
         </el-form-item>
+        <!-- Sign Up Button -->
         <el-form-item>
           <el-button type="primary" @click="register" class="signup-button">
             Sign Up
@@ -49,8 +55,8 @@
         </el-form-item>
       </el-form>
     </el-card>
+    <!-- Display Error Message -->
     <div v-if="error" class="error">{{ error }}</div>
-    <!-- Mostrar errores -->
   </div>
 </template>
 
@@ -72,6 +78,7 @@ export default {
   },
   data() {
     return {
+      // Sign Up Form Data and Rules
       signupForm: {
         username: "",
         email: "",
@@ -126,36 +133,43 @@ export default {
           },
         ],
       },
-      error: "", // Variable para almacenar los errores
+      error: "", // Variable to store error messages
     };
   },
   methods: {
+    // Encrypts the provided text
     encrypt(text) {
       return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
     },
+    // Handles user registration
     async register() {
       this.$refs.signupForm.validate(async (valid) => {
         if (valid) {
           try {
+            // Send registration request
             const response = await axios.post(
               `${signupEndPoint}?username=${this.signupForm.username.toLowerCase()}&email=${
                 this.signupForm.email
               }&password=${this.encrypt(this.signupForm.password)}`
             );
 
+            // Send confirmation email
             await axios.post(
               `${sendEmailEndPoint}?mailFrom=${this.signupForm.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
             );
 
+            // Login after successful registration
             await axios.post(
               `${loginEndPoint}?username=${this.signupForm.username.toLowerCase()}&password=${this.encrypt(
                 this.signupForm.password
               )}`
             );
 
+            // Update session state
             const sessionStore = useSessionStore();
             sessionStore.login(this.signupForm.username.toLowerCase());
 
+            // Redirect to dashboard
             this.$router.push("/dashboard");
           } catch (error) {
             console.error("Failed signup", error);
@@ -170,6 +184,7 @@ export default {
         }
       });
     },
+    // Validates if passwords match
     validateConfirmPassword(rule, value, callback) {
       if (value !== this.signupForm.password) {
         callback(new Error("Passwords don´t match"));
@@ -177,6 +192,7 @@ export default {
         callback();
       }
     },
+    // Validates password complexity
     validatePassword(rule, value, callback) {
       const hasUpperCase = /[A-Z]/.test(value);
       const hasLowerCase = /[a-z]/.test(value);
@@ -242,6 +258,6 @@ export default {
 .error {
   color: red;
   text-align: center;
-  margin-top: 10px;
+  margin-top: $spacing-small;
 }
 </style>

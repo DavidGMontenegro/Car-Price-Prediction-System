@@ -1,4 +1,5 @@
 <template>
+  <!-- Navigation menu -->
   <el-menu
     :default-active="activeIndex"
     class="navbar"
@@ -7,17 +8,22 @@
     text-color="#fff"
     router
   >
+    <!-- Left button container -->
     <div class="button-container">
+      <!-- Home button -->
       <el-menu-item index="1" route="/">Home</el-menu-item>
+      <!-- Dashboard button (visible if logged in) -->
       <el-menu-item index="2" v-if="session.isLoggedIn" route="/dashboard"
         >Dashboard</el-menu-item
       >
+      <!-- Log In button (visible if not logged in) -->
       <el-menu-item
         index="3"
         v-if="!session.isLoggedIn"
         route="/account-managment"
         >Log In</el-menu-item
       >
+      <!-- Price Prediction button (visible if logged in) -->
       <el-menu-item
         index="3"
         v-if="session.isLoggedIn"
@@ -25,10 +31,13 @@
         >Price Prediction</el-menu-item
       >
     </div>
+    <!-- Right button container -->
     <div class="button-container">
+      <!-- Profile image (visible if logged in) -->
       <el-menu-item index="4" v-if="session.isLoggedIn" route="/personal-data">
         <img :src="profileImageUrl" alt="Profile" class="profile-image" />
       </el-menu-item>
+      <!-- Log Out button (visible if logged in) -->
       <el-menu-item
         index="5"
         route="/"
@@ -42,6 +51,7 @@
 </template>
 
 <script lang="ts">
+// Importing necessary modules and constants
 import { useSessionStore } from "~/stores/session";
 import { ref, onMounted, watch } from "vue";
 import axios from "axios";
@@ -49,28 +59,33 @@ import { getUserDataEndPoint } from "~/constants/endpoints";
 
 export default {
   setup() {
+    // Getting session store
     const session = useSessionStore();
+    // Profile image URL
     const profileImageUrl = ref("");
 
+    // Function to fetch user data
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
           `${getUserDataEndPoint}?username=${session.username}`
         );
+        // Set profile image URL
         profileImageUrl.value = `data:image/png;base64,${response.data.profilePicture}`;
       } catch (error) {
         console.error("Failed to fetch user data: ", error);
       }
     };
 
-    // Fetch data only on initial mount and when username changes
+    // Watch for changes in username and fetch user data accordingly
     watch(
       () => session.username,
       async (username) => {
         if (username && session.isLoggedIn) {
           await fetchUserData();
         } else {
-          profileImageUrl.value = ""; // Clear image if not logged in or username changes
+          // Clear image if not logged in or username changes
+          profileImageUrl.value = "";
         }
       },
       { immediate: true } // Fetch data on initial mount
@@ -80,6 +95,7 @@ export default {
   },
   data() {
     return {
+      // Active menu index
       activeIndex: "1",
     };
   },
@@ -103,8 +119,8 @@ export default {
 .button-container {
   display: flex;
   flex-direction: row;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: $spacing-large;
+  padding-right: $spacing-large;
 }
 
 .el-menu-item {
@@ -119,10 +135,10 @@ export default {
 }
 
 .logout-icon {
-  width: 20px;
-  height: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: $spacing-large;
+  height: $spacing-large;
+  margin-left: $spacing-small;
+  margin-right: $spacing-small;
 }
 
 .profile-image {

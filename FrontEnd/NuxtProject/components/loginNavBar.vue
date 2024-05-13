@@ -1,12 +1,16 @@
 <template>
+  <!-- Navbar container -->
   <div class="navbar" @click="toggleOption(false)">
+    <!-- Left arrow -->
     <div class="arrow">
       <span v-if="selectedOption === 'SignUp'">&lt;</span>
     </div>
+    <!-- Option text -->
     <div class="option">
       <span v-if="selectedOption === 'LogIn'">Sign Up</span>
       <span v-else>Login</span>
     </div>
+    <!-- Right arrow -->
     <div class="arrow right">
       <span v-if="selectedOption === 'LogIn'">&gt;</span>
     </div>
@@ -17,13 +21,16 @@
 export default {
   data() {
     return {
+      // Initially selected option
       selectedOption: "LogIn",
     };
   },
   methods: {
+    // Method to toggle between Login and Sign Up
     toggleOption() {
       this.selectedOption =
         this.selectedOption === "LogIn" ? "SignUp" : "LogIn";
+      // Emitting event to parent component with the selected option
       this.$emit("option-selected", this.selectedOption);
     },
   },
@@ -53,6 +60,6 @@ export default {
 }
 
 .arrow {
-  font-size: 24px;
+  $font-size-large: 24px;
 }
 </style>
