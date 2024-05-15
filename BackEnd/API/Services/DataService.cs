@@ -20,7 +20,7 @@ public class DataService : IDataService
     public async Task<IEnumerable<Car>> GetAllData()
     {
         // Ruta al archivo CSV
-        string filePath = ".\\Car-dataset\\car details v4.csv";
+        string filePath = "./Car-dataset/car details v4.csv";
         var cars = new List<Car>();
 
         // Leer el archivo CSV y cargar los datos en la lista de objetos Car

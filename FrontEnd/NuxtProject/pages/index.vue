@@ -32,16 +32,19 @@ export default {
     return {
       carouselImages: [
         {
-          src: "https://images.unsplash.com/photo-1611651338412-8403fa6e3599?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          src: "https://final-getd.s3.eu-west-2.amazonaws.com/black_porsche_garage.avif",
         },
         {
-          src: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          src: "https://final-getd.s3.eu-west-2.amazonaws.com/porsche_911_back.avif",
         },
         {
-          src: "https://images.unsplash.com/photo-1534093607318-f025413f49cb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          src: "https://final-getd.s3.eu-west-2.amazonaws.com/porsche_gt3_snow.avif",
         },
         {
-          src: "https://images.unsplash.com/photo-1613921568536-555645be4032?q=80&w=2022&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          src: "https://final-getd.s3.eu-west-2.amazonaws.com/sporty_gt2rs.avif",
+        },
+        {
+          src: "https://final-getd.s3.eu-west-2.amazonaws.com/vintage_porsche.avif",
         },
       ],
     };

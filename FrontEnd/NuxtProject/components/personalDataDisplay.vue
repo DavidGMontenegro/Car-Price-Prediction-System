@@ -3,14 +3,18 @@
     <div class="editing-buttons" v-if="editing">
       <el-button @click="toggleEditing" class="edit-button">
         <img
-          src="@/assets/images/GoBackArrow.png"
+          src="https://final-getd.s3.eu-west-2.amazonaws.com/UI_Icons/GoBackArrow.png"
           alt="Cancelar"
           class="button-icon"
         />
       </el-button>
       <p>Edit My Data</p>
       <el-button @click="saveChanges" class="edit-button">
-        <img src="@/assets/images/Done.png" alt="Guardar" class="button-icon" />
+        <img
+          src="https://final-getd.s3.eu-west-2.amazonaws.com/UI_Icons/Done.png"
+          alt="Guardar"
+          class="button-icon"
+        />
       </el-button>
     </div>
     <div class="profile-picture" @click="uploadProfilePicture">

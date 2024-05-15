@@ -2,7 +2,7 @@
   <div class="custom-container">
     <div class="left-section">
       <img
-        src="https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://final-getd.s3.eu-west-2.amazonaws.com/black_porsche_port.avif"
         alt="Background"
         class="background-image"
       />
@@ -93,7 +93,7 @@ export default {
   }
 
   .right-section {
-    background-image: url("https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("https://final-getd.s3.eu-west-2.amazonaws.com/black_porsche_port.avif");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

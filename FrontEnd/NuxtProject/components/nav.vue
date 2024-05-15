@@ -44,7 +44,11 @@
         v-if="session.isLoggedIn"
         @click="session.logout()"
       >
-        <img src="assets/images/LogOut.png" alt="Log Out" class="logout-icon" />
+        <img
+          src="https://final-getd.s3.eu-west-2.amazonaws.com/UI_Icons/LogOut.png"
+          alt="Log Out"
+          class="logout-icon"
+        />
       </el-menu-item>
     </div>
   </el-menu>

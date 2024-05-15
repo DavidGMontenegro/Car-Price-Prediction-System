@@ -6,7 +6,7 @@
       <el-button @click="$emit('cancel')" class="password-change-button">
         <!-- Icon for cancel button -->
         <img
-          src="@/assets/images/GoBackArrow.png"
+          src="https://final-getd.s3.eu-west-2.amazonaws.com/UI_Icons/GoBackArrow.png"
           alt="Cancelar"
           class="button-icon"
         />
@@ -16,7 +16,11 @@
       <!-- Button to save password changes -->
       <el-button @click="saveChanges" class="password-change-button">
         <!-- Icon for save button -->
-        <img src="@/assets/images/Done.png" alt="Guardar" class="button-icon" />
+        <img
+          src="https://final-getd.s3.eu-west-2.amazonaws.com/UI_Icons/Done.png"
+          alt="Guardar"
+          class="button-icon"
+        />
       </el-button>
     </div>
     <!-- Form for changing password -->

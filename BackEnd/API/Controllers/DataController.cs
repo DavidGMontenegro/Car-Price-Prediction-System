@@ -1,5 +1,7 @@
 ﻿using FinalAPI.Models;
 using FinalAPI.Services;
+using log4net;
+using log4net.Config;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,11 +12,13 @@ namespace FinalAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class DataController : ControllerBase
-    {   
+    {
+        private static readonly ILog log = LogManager.GetLogger(typeof(DataController));
         private readonly IDataService dataService;
 
         public DataController(IDataService dataService)
         {
+            XmlConfigurator.Configure(new FileInfo("../../../LoggerConfig.xml"));
             this.dataService = dataService;
         }
 
@@ -31,11 +35,11 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener todos los datos: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
 
-        // Gráfico de barras - Distribución de precios por marca
         [HttpGet("price-distribution-by-make")]
         public async Task<IActionResult> GetPriceDistributionByMake()
         {
@@ -46,11 +50,11 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener distribución de precios por marca: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
 
-        // Gráfico de barras - Distribución de tipos de transmisión
         [HttpGet("transmission-type-distribution")]
         public async Task<IActionResult> GetTransmissionTypeDistribution()
         {
@@ -61,11 +65,11 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener distribución de tipos de transmisión: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
 
-        // Gráfico de líneas - Tendencia de precios a lo largo de los años
         [HttpGet("price-trend-by-year")]
         public async Task<IActionResult> GetPriceTrendByYear()
         {
@@ -76,11 +80,11 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener tendencia de precios por año: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
 
-        // Gráfico circular - Distribución de tipos de combustible
         [HttpGet("fuel-type-distribution")]
         public async Task<IActionResult> GetFuelTypeDistribution()
         {
@@ -91,11 +95,11 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener distribución de tipos de combustible: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
-        
-        // Histograma - Distribución de años de los coches
+
         [HttpGet("year-distribution")]
         public async Task<IActionResult> GetYearDistribution()
         {
@@ -106,6 +110,7 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener distribución de años de los coches: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
@@ -120,6 +125,7 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener todas las marcas de coches: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
@@ -134,6 +140,7 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener coches por marca: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
@@ -148,6 +155,7 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener potencias por marca y modelo: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
@@ -162,8 +170,10 @@ namespace FinalAPI.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Error interno del servidor al obtener colores por marca y modelo: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
+
     }
 }
