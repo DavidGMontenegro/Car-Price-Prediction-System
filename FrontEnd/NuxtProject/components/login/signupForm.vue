@@ -150,28 +150,22 @@ export default {
           this.loading = true;
           try {
             // Send registration request
-            const response = await axios.post(
+            let response = await axios.post(
               `${signupEndPoint}?username=${this.signupForm.username.toLowerCase()}&email=${
                 this.signupForm.email
               }&password=${this.encrypt(this.signupForm.password)}`
             );
-
-            // Send confirmation email
-            await axios.post(
-              `${sendEmailEndPoint}?mailFrom=${this.signupForm.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
-            );
-
             // Login after successful registration
             response = await axios.post(`${loginEndPoint}`, {
-              email: this.loginForm.username.toLowerCase(),
-              password: this.encrypt(this.loginForm.password),
+              email: this.signupForm.username.toLowerCase(),
+              password: this.encrypt(this.signupForm.password),
             });
 
             const token = response.data.token;
             console.log(token);
             // Updating session and redirecting on successful login
             const sessionStore = useSessionStore();
-            sessionStore.login(this.loginForm.username, token);
+            sessionStore.login(this.signupForm.username, token);
 
             this.loading = false;
             // Redirect to dashboard
@@ -185,6 +179,13 @@ export default {
               this.$message.error("An error ocurred. Try again later...");
             }
           }
+
+          try {
+            // Send confirmation email
+            await axios.post(
+              `${sendEmailEndPoint}?mailFrom=${this.signupForm.email}&subject=${signUpEmailTemplate.subject}&body=${signUpEmailTemplate.body}`
+            );
+          } catch (error) {}
         } else {
           console.log("Not valid form");
         }

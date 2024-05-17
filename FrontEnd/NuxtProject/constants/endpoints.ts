@@ -1,4 +1,4 @@
-const ip = "localhost:5076";
+const ip = "ec2-18-133-224-194.eu-west-2.compute.amazonaws.com:5000";
 
 export const loginEndPoint = "http://" + ip + "/api/Users/login";
 export const signupEndPoint = "http://" + ip + "/api/Users/register";

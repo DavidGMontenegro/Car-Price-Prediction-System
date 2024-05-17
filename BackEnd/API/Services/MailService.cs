@@ -1,36 +1,55 @@
 ﻿using FinalAPI.Data;
 using FinalAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
+/// <summary>
+/// Service class for sending emails.
+/// </summary>
 public class MailService : IMailService
 {
     private readonly DataContext _context;
 
+    /// <summary>
+    /// Constructor for initializing MailService with DataContext dependency.
+    /// </summary>
+    /// <param name="context">Data context</param>
     public MailService(DataContext context)
     {
         this._context = context;
     }
+
+    /// <summary>
+    /// Sends an email with the specified details.
+    /// </summary>
+    /// <param name="mailFrom">Sender's email address or username</param>
+    /// <param name="subject">Email subject</param>
+    /// <param name="body">Email body</param>
     public async Task SendEmail(string mailFrom, string subject, string body)
     {
-        //setx EMAIL davidgm0928@gmail.com
+        // SMTP configuration
+
+        //setx EMAIL email
         //setx PASSWORD contraseña
         //string email = Environment.GetEnvironmentVariable("EMAIL");
         //string password = Environment.GetEnvironmentVariable("PASSWORD");
         string emailFrom = "dsfinalproject@outlook.com";
-        string password = "contrasenia1234";
+        string password = "";
 
+        // Check if mailFrom contains '@'; if not, assume it's a username and fetch the corresponding email from the data context
         if (!mailFrom.Contains("@"))
         {
-            // Si no contiene '@', asumimos que es un nombre de usuario
-            // y buscamos el correo correspondiente en el dataContext de usuarios
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == mailFrom);
-
-            // Si encontramos el usuario, usamos su correo electrónico
-            mailFrom = user.Email;
+            if (user != null)
+                mailFrom = user.Email;
+            else
+                throw new ArgumentException($"Invalid sender: {mailFrom}");
         }
 
+        // SMTP client setup
         var smtpClient = new SmtpClient("smtp-mail.outlook.com", 587)
         {
             EnableSsl = true,
@@ -38,15 +57,17 @@ public class MailService : IMailService
             Credentials = new NetworkCredential(emailFrom, password),
         };
 
+        // Email message setup
         var message = new MailMessage
         {
             From = new MailAddress(emailFrom),
             Subject = subject,
             Body = body,
-            IsBodyHtml = true // Indica que el cuerpo del correo es HTML
+            IsBodyHtml = true // Indicates that the email body is HTML
         };
         message.To.Add(mailFrom);
 
+        // Send email asynchronously
         await smtpClient.SendMailAsync(message);
     }
 }

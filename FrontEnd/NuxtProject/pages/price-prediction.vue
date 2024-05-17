@@ -99,9 +99,11 @@
     </form>
 
     <!-- Display Predicted Price -->
-    <div v-if="predictedPrice !== null" class="predicted-price">
-      <h2>Predicted Price: {{ predictedPrice }}</h2>
-    </div>
+    <transition name="fade">
+      <div v-if="predictedPrice !== null" class="predicted-price">
+        <h2>Predicted Price: {{ predictedPrice }}</h2>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -206,8 +208,7 @@ export default {
         }
 
         const result = await response.json();
-        console.log("Precio predicho:", result.predicted_price);
-        alert("Precio predicho: " + result.predicted_price);
+        alert("Price prediction: " + result.predicted_price.toFixed(2));
       } catch (error) {
         console.error("Error al enviar el formulario:", error);
       }
@@ -276,5 +277,15 @@ h1 {
   text-align: center;
   color: $color-primary;
   font-size: 1.5em;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

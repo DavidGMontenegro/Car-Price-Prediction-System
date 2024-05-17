@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\bin\Release\net8.0\publish\</_PublishTargetUrl>
-    <History>True|2024-05-15T10:59:38.2919013Z;True|2024-05-15T12:42:34.0478505+02:00;True|2024-05-15T11:48:02.9006463+02:00;</History>
+    <History>True|2024-05-17T23:31:44.0497529Z;True|2024-05-18T00:25:39.4094620+02:00;True|2024-05-15T12:59:38.2919013+02:00;True|2024-05-15T12:42:34.0478505+02:00;True|2024-05-15T11:48:02.9006463+02:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

@@ -25,6 +25,7 @@ C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\ne
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\PubTmp\Out\Microsoft.OpenApi.dll
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\PubTmp\Out\Microsoft.SqlServer.Server.dll
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
+C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\PubTmp\Out\Newtonsoft.Json.dll
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\PubTmp\Out\Python.Runtime.dll
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\PubTmp\Out\SixLabors.ImageSharp.dll
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll

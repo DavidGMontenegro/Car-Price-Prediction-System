@@ -23,19 +23,4 @@
         public decimal SeatingCapacity { get; set; }
         public decimal FuelTankCapacity { get; set; }
     }
-
-    public class CarParameters
-    {
-        public int Year { get; set; }
-        public int Kilometer { get; set; }
-        public string FuelType { get; set; }
-        public string Transmission { get; set; }
-        public string Owner { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public string Color { get; set; }
-        public string SellerType { get; set; }
-        public string Engine { get; set; }
-        public string Drivetrain { get; set; }
-    }
 }

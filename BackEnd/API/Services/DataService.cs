@@ -2,31 +2,41 @@
 using FinalAPI.Models;
 using FinalAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Service class for handling data operations related to cars.
+/// </summary>
 public class DataService : IDataService
 {
     private readonly DataContext _context;
 
+    /// <summary>
+    /// Constructor for initializing DataService with DataContext dependency.
+    /// </summary>
+    /// <param name="context">Data context</param>
     public DataService(DataContext context)
     {
         this._context = context;
     }
 
-    // Obtiene todos los datos de los coches del archivo CSV
+    /// <summary>
+    /// Retrieves all car data from the CSV file.
+    /// </summary>
     public async Task<IEnumerable<Car>> GetAllData()
     {
-        // Ruta al archivo CSV
+        // Path to the CSV file
         string filePath = "./Car-dataset/car details v4.csv";
         var cars = new List<Car>();
 
-        // Leer el archivo CSV y cargar los datos en la lista de objetos Car
+        // Read the CSV file and load the data into the list of Car objects
         using (var reader = new StreamReader(filePath))
         {
-            // Saltar la primera línea (cabecera)
+            // Skip the first line (header)
             await reader.ReadLineAsync();
 
             while (!reader.EndOfStream)
@@ -36,11 +46,11 @@ public class DataService : IDataService
 
                 if (values.Any(string.IsNullOrWhiteSpace))
                 {
-                    // Si alguna celda está vacía, saltar esta línea y continuar con la siguiente
+                    // If any cell is empty, skip this line and proceed to the next
                     continue;
                 }
 
-                // Crear un objeto Car con los datos de la línea
+                // Create a Car object with the data from the line
                 var car = new Car
                 {
                     Make = values[0],
@@ -65,7 +75,7 @@ public class DataService : IDataService
                     FuelTankCapacity = decimal.Parse(values[19])
                 };
 
-                // Agregar el objeto Car a la lista
+                // Add the Car object to the list
                 cars.Add(car);
             }
         }
@@ -73,7 +83,9 @@ public class DataService : IDataService
         return cars;
     }
 
-    // Obtiene la distribución de precios por marca de los coches
+    /// <summary>
+    /// Retrieves the price distribution by make of cars.
+    /// </summary>
     public async Task<IDictionary<string, decimal>> GetPriceDistributionByMake()
     {
         var data = await GetAllData();
@@ -81,7 +93,9 @@ public class DataService : IDataService
                    .ToDictionary(group => group.Key, group => group.Average(car => car.Price));
     }
 
-    // Obtiene la distribución de tipos de transmisión de los coches
+    /// <summary>
+    /// Retrieves the transmission type distribution of cars.
+    /// </summary>
     public async Task<IDictionary<string, int>> GetTransmissionTypeDistribution()
     {
         var data = await GetAllData();
@@ -89,7 +103,9 @@ public class DataService : IDataService
                    .ToDictionary(group => group.Key, group => group.Count());
     }
 
-    // Obtiene la tendencia de precios a lo largo de los años de los coches
+    /// <summary>
+    /// Retrieves the price trend by year of cars.
+    /// </summary>
     public async Task<IDictionary<int, decimal>> GetPriceTrendByYear()
     {
         var data = await GetAllData();
@@ -97,7 +113,9 @@ public class DataService : IDataService
                    .ToDictionary(group => group.Key, group => group.Average(car => car.Price));
     }
 
-    // Obtiene la distribución de tipos de combustible de los coches
+    /// <summary>
+    /// Retrieves the fuel type distribution of cars.
+    /// </summary>
     public async Task<IDictionary<string, double>> GetFuelTypeDistribution()
     {
         var data = await GetAllData();
@@ -106,7 +124,9 @@ public class DataService : IDataService
                    .ToDictionary(group => group.Key, group => (double)group.Count() / totalCount * 100);
     }
 
-    // Obtiene la distribución de años de fabricación de los coches
+    /// <summary>
+    /// Retrieves the year distribution of cars.
+    /// </summary>
     public async Task<IDictionary<int, int>> GetYearDistribution()
     {
         var data = await GetAllData();
@@ -114,6 +134,9 @@ public class DataService : IDataService
                    .ToDictionary(group => group.Key, group => group.Count());
     }
 
+    /// <summary>
+    /// Retrieves all car brands.
+    /// </summary>
     public async Task<IEnumerable<string>> GetAllCarBrands()
     {
         var data = await GetAllData();
@@ -121,6 +144,10 @@ public class DataService : IDataService
         return uniqueMakes;
     }
 
+    /// <summary>
+    /// Retrieves cars by brand.
+    /// </summary>
+    /// <param name="make">Brand</param>
     public async Task<IEnumerable<string>> GetCarsByBrand(string make)
     {
         var data = await GetAllData();
@@ -133,6 +160,9 @@ public class DataService : IDataService
         return carsByBrand;
     }
 
+    /// <summary>
+    /// Retrieves powers by brand and model of cars.
+    /// </summary>
     public async Task<IEnumerable<string>> GetPowersByBrandAndModel(string brand, string model)
     {
         try
@@ -153,6 +183,9 @@ public class DataService : IDataService
         }
     }
 
+    /// <summary>
+    /// Retrieves colors by brand and model of cars.
+    /// </summary>
     public async Task<IEnumerable<string>> GetColorsByBrandAndModel(string brand, string model)
     {
         try
@@ -172,5 +205,5 @@ public class DataService : IDataService
             throw new Exception($"Error retrieving colors for brand '{brand}' and model '{model}': {ex.Message}");
         }
     }
-
 }
+

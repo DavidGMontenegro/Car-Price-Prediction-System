@@ -127,3 +127,4 @@ C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\ne
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\FinalAPI.pdb
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\FinalAPI.genruntimeconfig.cache
 C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\obj\Release\net8.0\linux-x64\ref\FinalAPI.dll
+C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\bin\Release\net8.0\linux-x64\Newtonsoft.Json.dll
