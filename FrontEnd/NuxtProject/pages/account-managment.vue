@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import Navbar from "@/components/loginNavBar.vue";
-import loginForm from "@/components/loginForm.vue";
-import signupForm from "@/components/signupForm.vue";
+import Navbar from "@/components/login/loginNavBar.vue";
+import loginForm from "@/components/login/loginForm.vue";
+import signupForm from "@/components/login/signupForm.vue";
 
 export default {
   components: { Navbar, loginForm, signupForm },

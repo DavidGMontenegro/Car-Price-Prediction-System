@@ -1,10 +1,11 @@
 ﻿using FinalAPI.Models;
-using FinalAPI.Services;
 using log4net;
 using log4net.Config;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace FinalAPI.Controllers
@@ -14,12 +15,10 @@ namespace FinalAPI.Controllers
     public class PricePredictorController : ControllerBase
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(PricePredictorController));
-        private readonly IPricePredictor pricePredictor;
 
-        public PricePredictorController(IPricePredictor pricePredictor)
+        public PricePredictorController()
         {
             XmlConfigurator.Configure(new FileInfo("../../../LoggerConfig.xml"));
-            this.pricePredictor = pricePredictor;
         }
 
         [HttpPost("predict-price")]
@@ -27,17 +26,46 @@ namespace FinalAPI.Controllers
         {
             try
             {
-                var precioPredicho = await pricePredictor.PredictPrice(parameters);
-                log.Info($"Predicción de precio realizada con éxito para el coche de modelo: {parameters}");
+                var jsonParameters = JsonConvert.SerializeObject(parameters);
+                log.Info($"Parametros recibidos para predicción: {jsonParameters}");
 
-                return Ok(new { precio = precioPredicho });
+                // Ruta del script de Python
+                var scriptPath = "predict_price.py";
+
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = "python",
+                    Arguments = $"{scriptPath} \"{jsonParameters}\"",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (var process = new Process { StartInfo = startInfo })
+                {
+                    process.Start();
+                    var output = await process.StandardOutput.ReadToEndAsync();
+                    var errorOutput = await process.StandardError.ReadToEndAsync();
+                    process.WaitForExit();
+
+                    if (!string.IsNullOrWhiteSpace(errorOutput))
+                    {
+                        log.Error($"Error en el script de Python: {errorOutput}");
+                        return StatusCode(500, $"Error en el script de Python: {errorOutput}");
+                    }
+
+                    log.Info($"Salida del script de Python: {output}");
+
+                    // Aquí puedes manejar la salida del script de Python y devolverla como respuesta
+                    return Ok(output);
+                }
             }
             catch (Exception ex)
             {
-                log.Error($"Error interno del servidor al predecir precio: {ex.Message}");
+                log.Error($"Error interno del servidor al predecir el precio: {ex.Message}");
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
-
     }
 }

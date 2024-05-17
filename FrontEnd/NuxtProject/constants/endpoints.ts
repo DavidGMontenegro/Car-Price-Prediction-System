@@ -7,11 +7,8 @@ export const changePasswordEndPoint = "http://" + ip + "/api/Users/change-user-p
 export const changeProfilePicEndPoint = "http://" + ip + "/api/Users/change-user-picture";
 export const modifyUserDataEndPoint = "http://" + ip + "/api/Users/modify-user-data";
 
-
 export const sendEmailEndPoint = "http://" + ip + "/api/Mail/send-email";
 
-
-// Data EndPoints
 export const getDataEndPoint = "http://" + ip + "/api/Data/get-all-data";
 export const priceByMakeEndPoint = "http://" + ip + "/api/Data/price-distribution-by-make";
 export const transmissionTypeEndPoint = "http://" + ip + "/api/Data/transmission-type-distribution";

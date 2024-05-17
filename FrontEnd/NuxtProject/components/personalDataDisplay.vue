@@ -116,10 +116,11 @@ const handleFileUpload = async (event: any) => {
         const isSquareLike = checkSquareRatio(image.width, image.height);
         if (!isSquareLike) {
           alert(
-            "La imagen debe tener un formato más cuadrado. Por favor, seleccione otra imagen." +
+            "La imagen debe tener un formato más cuadrado. Por favor, seleccione otra imagen. (" +
               image.width +
               " x " +
-              image.height
+              image.height +
+              ")"
           );
         } else {
           // Si la imagen es cuadrada, continúa con el procesamiento

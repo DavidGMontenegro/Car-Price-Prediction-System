@@ -47,6 +47,7 @@
 // Importing necessary modules and constants
 import { sendEmailEndPoint } from "~/constants/endpoints";
 import axios from "axios";
+import { ElMessage } from "element-plus";
 
 export default {
   data() {
@@ -89,7 +90,7 @@ export default {
         console.log(response);
       } catch (error) {
         // Displaying error message on failure
-        this.$message.error("An error ocurred. Try again later...");
+        ElMessage.error("An error ocurred. Try again later...");
       }
     },
     // Method to scroll to bottom of the page

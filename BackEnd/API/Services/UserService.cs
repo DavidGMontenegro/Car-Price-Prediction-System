@@ -20,10 +20,7 @@ namespace FinalAPI.Services
             {
                 throw new ArgumentException("Username or email already in use");
             }
-
-            // Hash de la contraseña (debes implementar correctamente el hash de la contraseña)
-            // user.Password = hashFunction(user.Password);
-
+            
             // Guardar el usuario en la base de datos
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -73,7 +70,6 @@ namespace FinalAPI.Services
 
             return user;
         }
-
 
         public async Task<User?> GetUserData(string username)
         {

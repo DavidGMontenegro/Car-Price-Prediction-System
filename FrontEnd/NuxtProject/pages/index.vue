@@ -20,17 +20,50 @@
         </p>
       </div>
     </div>
+    <!-- List of Car Brands -->
+    <h2 style="margin-top: 5vh; margin-bottom: 2.5vh">Our Car Brands</h2>
+    <div class="brands">
+      <el-card
+        v-for="(brand, index) in carBrands"
+        :key="index"
+        class="brand-card"
+        @click="redirectToWikipedia(brand.name)"
+      >
+        <template #header>
+          <p class="card-header">{{ brand.name }}</p>
+        </template>
+        <img :src="brand.imageURL" style="width: 100%" />
+        <p class="card-description">
+          {{ truncateDescription(brand.description) }}
+        </p>
+      </el-card>
+    </div>
   </div>
 </template>
 
 <script>
-import Carousel from "@/components/Carousel.vue";
+import axios from "axios";
+import Carousel from "@/components/carousel.vue";
+import { ElCard } from "element-plus";
+import { getBrandsEndPoints } from "~/constants/endpoints";
 
 export default {
-  components: { Carousel },
+  components: { Carousel, ElCard },
   data() {
     return {
-      carouselImages: [
+      carouselImages: [], // Placeholder for carousel images
+      carBrands: [], // Placeholder for car brands
+    };
+  },
+  mounted() {
+    this.fetchCarouselImages(); // Fetch carousel images
+    this.fetchCarBrands(); // Fetch car brands
+  },
+  methods: {
+    async fetchCarouselImages() {
+      // Placeholder function for fetching carousel images (Replace with your own logic)
+      // For example:
+      this.carouselImages = [
         {
           src: "https://final-getd.s3.eu-west-2.amazonaws.com/black_porsche_garage.avif",
         },
@@ -46,8 +79,51 @@ export default {
         {
           src: "https://final-getd.s3.eu-west-2.amazonaws.com/vintage_porsche.avif",
         },
-      ],
-    };
+      ];
+    },
+    async fetchCarBrands() {
+      try {
+        const response = await axios.get(getBrandsEndPoints);
+        const carBrands = response.data;
+        const promises = carBrands.map(async (brand) => {
+          try {
+            const response = await axios.get(
+              `https://en.wikipedia.org/api/rest_v1/page/summary/${brand}`
+            );
+            const { thumbnail, extract } = response.data;
+            return {
+              name: brand,
+              imageURL: thumbnail?.source
+                ? thumbnail?.source
+                : "https://www.seat.com.mt/content/dam/public/seat-website/carworlds/compare/default-image/ghost.png",
+              description: extract,
+            };
+          } catch (error) {
+            console.error(`Failed to fetch brand ${brand}`, error);
+            return {
+              name: brand,
+              imageURL: null,
+              description: "Description not available",
+            };
+          }
+        });
+        this.carBrands = await Promise.all(promises);
+      } catch (error) {
+        console.error("Failed to fetch car brands", error);
+      }
+    },
+    truncateDescription(description) {
+      const maxLength = 100; // Maximum length of description
+      if (description.length > maxLength) {
+        return description.substring(0, maxLength) + "..."; // Truncate and add ellipsis
+      } else {
+        return description;
+      }
+    },
+    redirectToWikipedia(brandName) {
+      const wikipediaURL = `https://en.wikipedia.org/wiki/${brandName}`;
+      window.open(wikipediaURL, "_blank");
+    },
   },
 };
 </script>
@@ -63,7 +139,8 @@ export default {
 
   .header {
     text-align: center;
-    margin-bottom: 10vh;
+    margin-bottom: 12vh;
+    margin-top: 2vh;
 
     h1 {
       font-size: $font-size-extra-large;
@@ -72,24 +149,56 @@ export default {
     }
   }
 
+  h2 {
+    font-size: $font-size-large;
+    margin-bottom: $spacing-medium;
+    color: $color-primary;
+  }
+
   .content {
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
     align-items: flex-start;
+    margin-bottom: 12vh;
 
     .description {
       flex: 1;
       padding: 0 $spacing-large;
-
-      h2 {
-        font-size: $font-size-large;
-        margin-bottom: $spacing-medium;
-        color: $color-primary;
-      }
     }
 
     .carousel {
-      flex: 0.75;
+      flex: 1;
+    }
+  }
+
+  .brands {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    .brand-card {
+      flex: 0 0 calc(25% - #{$spacing-medium * 2});
+      min-width: 200px;
+      margin-bottom: $spacing-large;
+      background-color: $color-nav-background;
+      border-color: transparent;
+      cursor: pointer;
+    }
+
+    .brand-card:hover {
+      box-shadow: 0px 0px 22px -3px $color-primary;
+    }
+
+    .card-header {
+      color: $color-secondary;
+      font-size: $font-size-medium;
+      margin: 1vh;
+    }
+
+    .card-description {
+      color: $color-secondary;
+      font-weight: 200;
     }
   }
 
@@ -107,6 +216,10 @@ export default {
     .carousel {
       width: 100%;
       max-width: 100%;
+    }
+
+    .brands .brand-card {
+      flex-basis: calc(90% - #{$spacing-medium * 2});
     }
   }
 }

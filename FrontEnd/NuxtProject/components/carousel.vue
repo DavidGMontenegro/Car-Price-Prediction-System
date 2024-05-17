@@ -28,10 +28,6 @@ export default {
 </script>
 
 <style scoped>
-.image-carousel {
-  max-width: 600px;
-}
-
 .carousel-item {
   display: flex;
   justify-content: center;
@@ -39,8 +35,8 @@ export default {
 }
 
 .carousel-image {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 120%;
+  max-height: 120%;
   border-radius: 8px;
 }
 </style>

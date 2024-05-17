@@ -97,6 +97,11 @@
       <!-- Submit Button -->
       <button type="submit" class="submit-btn">Submit Data</button>
     </form>
+
+    <!-- Display Predicted Price -->
+    <div v-if="predictedPrice !== null" class="predicted-price">
+      <h2>Predicted Price: {{ predictedPrice }}</h2>
+    </div>
   </div>
 </template>
 
@@ -109,7 +114,6 @@ import {
 
 export default {
   data() {
-    // Data properties for storing form inputs and options
     return {
       selectedMake: "",
       selectedModel: "",
@@ -131,16 +135,15 @@ export default {
       ],
       minYear: 1995,
       maxYear: new Date().getFullYear(),
+      predictedPrice: null,
     };
   },
   mounted() {
-    // Fetch initial data when component is mounted
     this.getAllCarBrands();
   },
   methods: {
     async getAllCarBrands() {
       try {
-        // Fetch all car brands and populate options for make
         const response = await fetch(getBrandsEndPoints);
         const data = await response.json();
         this.makes = data.map((brand) => ({ label: brand, value: brand }));
@@ -150,7 +153,6 @@ export default {
     },
     async getCarsByBrand() {
       try {
-        // Fetch models based on selected make and populate options for model
         if (!this.selectedMake) {
           this.models = [];
           return;
@@ -166,7 +168,6 @@ export default {
     },
     async getColors() {
       try {
-        // Fetch colors based on selected make and model and populate options for color
         if (!this.selectedMake || !this.selectedModel) {
           this.colors = [];
           return;
@@ -180,18 +181,36 @@ export default {
         console.error("Error fetching car colors:", error);
       }
     },
-    submitForm() {
-      // Log form data on submission
-      console.log("Selected Make:", this.selectedMake);
-      console.log("Selected Model:", this.selectedModel);
-      console.log("Selected Color:", this.selectedColor);
-      console.log("Selected Transmission:", this.selectedTransmission);
-      console.log("Kilometer:", this.kilometer);
-      console.log("Engine cc:", this.engineCC);
-      console.log("Selected Drivetrain:", this.selectedDrivetrain);
-      console.log("Owner:", this.selectedOwner);
-      console.log("Seller Type:", this.selectedSellerType);
-      console.log("Year:", this.selectedYear);
+    async submitForm() {
+      try {
+        const formData = new FormData();
+        formData.append("year", this.selectedYear);
+        formData.append("kilometer", this.kilometer);
+        formData.append("fuel_type", this.selectedFuelType);
+        formData.append("transmission", this.selectedTransmission);
+        formData.append("owner", this.selectedOwner);
+        formData.append("make", this.selectedMake);
+        formData.append("model", this.selectedModel);
+        formData.append("color", this.selectedColor);
+        formData.append("seller_type", this.selectedSellerType);
+        formData.append("engine", this.engineCC + "cc");
+        formData.append("drivetrain", this.selectedDrivetrain);
+
+        const response = await fetch("http://localhost:5000/predict", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Error en la predicción");
+        }
+
+        const result = await response.json();
+        console.log("Precio predicho:", result.predicted_price);
+        alert("Precio predicho: " + result.predicted_price);
+      } catch (error) {
+        console.error("Error al enviar el formulario:", error);
+      }
     },
   },
 };
@@ -247,5 +266,15 @@ h1 {
 
 .submit-btn:hover {
   background-color: darken($color-primary, 10%);
+}
+
+.predicted-price {
+  margin-top: $spacing-large;
+  padding: $spacing-large;
+  background-color: lighten($color-primary, 40%);
+  border-radius: 8px;
+  text-align: center;
+  color: $color-primary;
+  font-size: 1.5em;
 }
 </style>

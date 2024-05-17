@@ -2,7 +2,10 @@
 using FinalAPI.Services;
 using log4net;
 using log4net.Config;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace FinalAPI.Controllers
 {
@@ -44,19 +47,20 @@ namespace FinalAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(String username, String password)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
             try
             {
-                var user = await this.userService.Authenticate(username, password);
+                var user = await this.userService.Authenticate(request.Email, request.Password);
                 if (user != null)
                 {
                     log.Info($"Inicio de sesión exitoso: {user.Username}");
-                    return Ok(user);
+                    var token = IdentityController.GenerateToken(user);
+                    return Ok(new { token });
                 }
                 else
                 {
-                    log.Warn($"Credenciales inválidas para el usuario: {username}");
+                    log.Warn($"Credenciales inválidas para el usuario: {request.Email}");
                     return Unauthorized();
                 }
             }

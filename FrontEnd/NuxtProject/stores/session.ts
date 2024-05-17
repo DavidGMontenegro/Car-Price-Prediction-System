@@ -5,12 +5,15 @@ export const useSessionStore = defineStore({
   state: () => ({
     isLoggedIn: false,
     username: '',
+    token: "",
   }),
   actions: {
-    login(username: string) {
+    login(username: string, token: string) {
       localStorage.username = username;
+      localStorage.token = token;
       this.isLoggedIn = true;
       this.username = username;
+      this.token = token;
     },
     logout() {
       localStorage.removeItem('username');

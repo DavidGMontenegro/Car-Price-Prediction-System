@@ -71,6 +71,7 @@ import {
 import { useSessionStore } from "~/stores/session";
 import CryptoJS from "crypto-js";
 import { signUpEmailTemplate } from "~/constants/emails";
+import { ElMessage } from "element-plus";
 
 export default {
   setup() {
@@ -112,7 +113,7 @@ export default {
           confirmPassword.value = "";
         } catch (error) {
           // Display error message if request fails
-          this.$message.error("An error ocurred. Try again later...");
+          ElMessage.error("An error ocurred. Try again later...");
         }
       }
     };

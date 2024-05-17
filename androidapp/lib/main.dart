@@ -56,40 +56,54 @@ class _LoginPageState extends State<LoginPage> {
     final username = _usernameController.text;
     final password = encrypt(_passwordController.text);
 
-    final loginEndPoint =
-        "http://10.0.2.2:5076/api/Users/login?username=$username&password=$password";
+    final loginEndPoint = "http://10.0.2.2:5076/api/Users/login";
 
-    final response = await http.post(Uri.parse(loginEndPoint));
-
-    if (response.statusCode == 200) {
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isLoggedIn', true);
-      prefs.setString('username', username); // Guardar el nombre de usuario
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => UserPage(username: username)),
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Login Failed',
-                style: TextStyle(color: Colors.white)),
-            content: Text('Wrong credentials',
-                style: TextStyle(color: Colors.white)),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child:
-                    const Text('Close', style: TextStyle(color: Colors.white)),
-              ),
-            ],
-          );
+    try {
+      final response = await http.post(
+        Uri.parse(loginEndPoint),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
         },
+        body: jsonEncode(<String, String>{
+          'email': username,
+          'password': password,
+        }),
       );
+
+      if (response.statusCode == 200) {
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        prefs.setString('username', username); // Guardar el nombre de usuario
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => UserPage(username: username)),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Login Failed',
+                  style: TextStyle(color: Colors.white)),
+              content: Text('Wrong credentials',
+                  style: TextStyle(color: Colors.white)),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Close',
+                      style: TextStyle(color: Colors.white)),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (error) {
+      // Manejar cualquier error de red u otro error que pueda ocurrir
+      print('Error de red al intentar iniciar sesión: $error');
+      // Aquí puedes mostrar un mensaje de error al usuario
     }
   }
 

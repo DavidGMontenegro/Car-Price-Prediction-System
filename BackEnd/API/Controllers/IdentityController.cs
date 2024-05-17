@@ -21,29 +21,25 @@ namespace FinalAPI.Controllers
         private static TimeSpan TokenLifetime = TimeSpan.FromHours(1);
 
         [HttpPost(Name = "Login")]
-        public ActionResult GenerateToken(LoginRequest request)
+        public static string GenerateToken(User user)
         {
-            if (!CheckUserAndPass())
-                return Unauthorized();
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
-            SigningCredentials credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
+            };
 
-            var SecretToken = new JwtSecurityToken(
-              Issuer,
-              Audience,
-              null,
-              expires: DateTime.Now.Add(TokenLifetime),
-              signingCredentials: credentials);
+            var token = new JwtSecurityToken(
+                Issuer,
+                Audience,
+                claims,
+                expires: DateTime.Now.Add(TokenLifetime),
+                signingCredentials: credentials);
 
-            var token = new JwtSecurityTokenHandler().WriteToken(SecretToken);
-
-            return Ok(token);
-        }
-
-        private bool CheckUserAndPass()
-        {
-            return true;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
