@@ -95,6 +95,7 @@ export default {
     async login() {
       this.loading = true;
       try {
+        this.loading = true;
         // Sending login request
         const response = await axios.post(`${loginEndPoint}`, {
           email: this.loginForm.username.toLowerCase(),
@@ -108,7 +109,6 @@ export default {
         sessionStore.login(this.loginForm.username, token);
         this.$router.push("/dashboard");
         this.loading = false;
-        // Handle backend response, e.g., store session token in local storage or redirect to another page.
       } catch (error: any) {
         // Handling login failure
         this.loading = false;

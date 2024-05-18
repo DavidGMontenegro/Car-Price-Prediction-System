@@ -32,11 +32,8 @@ public class MailService : IMailService
     {
         // SMTP configuration
 
-        //setx EMAIL email
-        //setx PASSWORD contraseña
-        //string email = Environment.GetEnvironmentVariable("EMAIL");
-        //string password = Environment.GetEnvironmentVariable("PASSWORD");
-        string emailFrom = "dsfinalproject@outlook.com";
+        // EMAIL FIELDS
+        string emailFrom = "";
         string password = "";
 
         // Check if mailFrom contains '@'; if not, assume it's a username and fetch the corresponding email from the data context
