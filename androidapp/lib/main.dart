@@ -56,7 +56,8 @@ class _LoginPageState extends State<LoginPage> {
     final username = _usernameController.text;
     final password = encrypt(_passwordController.text);
 
-    final loginEndPoint = "http://10.0.2.2:5076/api/Users/login";
+    final loginEndPoint =
+        "http://ec2-18-133-224-194.eu-west-2.compute.amazonaws.com:5000/api/Users/login";
 
     try {
       final response = await http.post(
@@ -350,7 +351,8 @@ class UserPage extends StatelessWidget {
 
   Future<Map<String, dynamic>> fetchUserData(String username) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:5076/api/Users/Get-user?username=$username'),
+      Uri.parse(
+          'http://ec2-18-133-224-194.eu-west-2.compute.amazonaws.com:5000/api/Users/Get-user?username=$username'),
     );
 
     if (response.statusCode == 200) {
@@ -361,8 +363,8 @@ class UserPage extends StatelessWidget {
   }
 
   void _showCarBrandBottomSheet(BuildContext context) async {
-    final response = await http
-        .get(Uri.parse('http://10.0.2.2:5076/api/Data/get-car-brands'));
+    final response = await http.get(Uri.parse(
+        'http://ec2-18-133-224-194.eu-west-2.compute.amazonaws.com:5000/api/Data/get-car-brands'));
 
     if (response.statusCode == 200) {
       List<dynamic> brands = json.decode(response.body);
@@ -577,7 +579,7 @@ class CarListPage extends StatelessWidget {
 
   Future<List<String>> fetchCarsByBrand(String brand) async {
     final response = await http.get(Uri.parse(
-        'http://10.0.2.2:5076/api/Data/get-cars-by-brand?make=$brand'));
+        'http://ec2-18-133-224-194.eu-west-2.compute.amazonaws.com:5000/api/Data/get-cars-by-brand?make=$brand'));
 
     if (response.statusCode == 200) {
       return List<String>.from(jsonDecode(response.body));

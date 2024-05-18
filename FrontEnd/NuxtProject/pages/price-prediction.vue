@@ -1,6 +1,9 @@
 <template>
+  <!-- Container for the entire form -->
   <div class="container">
+    <!-- Title for the form -->
     <h1>Car Data Form for Price Prediction</h1>
+    <!-- Form starts here -->
     <form @submit.prevent="submitForm" class="form">
       <!-- Select for Make -->
       <el-select-v2
@@ -117,31 +120,32 @@ import {
 export default {
   data() {
     return {
-      selectedMake: "",
-      selectedModel: "",
-      selectedColor: "",
-      selectedTransmission: "",
-      kilometer: null,
-      engineCC: null,
-      selectedDrivetrain: "",
-      selectedOwner: "",
-      selectedSellerType: "",
-      selectedYear: null,
-      makes: [],
-      models: [],
-      colors: [],
+      selectedMake: "", // Selected car make
+      selectedModel: "", // Selected car model
+      selectedColor: "", // Selected car color
+      selectedTransmission: "", // Selected transmission type
+      kilometer: null, // Input for kilometers
+      engineCC: null, // Input for engine cc
+      selectedDrivetrain: "", // Selected drivetrain
+      selectedOwner: "", // Selected owner type
+      selectedSellerType: "", // Selected seller type
+      selectedYear: null, // Selected year
+      makes: [], // List of car makes
+      models: [], // List of car models
+      colors: [], // List of car colors
       drivetrains: [
+        // List of drivetrain options
         { value: "FWS", label: "FWS" },
         { value: "AWD", label: "AWD" },
         { value: "RWD", label: "RWD" },
       ],
-      minYear: 1995,
-      maxYear: new Date().getFullYear(),
-      predictedPrice: null,
+      minYear: 1995, // Minimum year for the slider
+      maxYear: new Date().getFullYear(), // Maximum year for the slider
+      predictedPrice: null, // Predicted car price
     };
   },
   mounted() {
-    this.getAllCarBrands();
+    this.getAllCarBrands(); // Fetch car brands when the component is mounted
   },
   methods: {
     async getAllCarBrands() {

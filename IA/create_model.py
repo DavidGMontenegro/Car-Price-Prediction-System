@@ -12,9 +12,10 @@ desired_columns = ['Make', 'Model', 'Price', 'Year', 'Kilometer', 'Fuel Type',
                     'Drivetrain', 'Length', 'Width', 'Height', 'Seating Capacity',
                     'Fuel Tank Capacity']
 
-# Remove rows with missing values before encoding
+# Eliminar filas con valores faltantes antes de codificar
 df.dropna(subset=desired_columns, inplace=True)
 
+# Características (X) y variable objetivo (y)
 X = df[desired_columns].drop('Price', axis=1)
 y = df['Price']
 

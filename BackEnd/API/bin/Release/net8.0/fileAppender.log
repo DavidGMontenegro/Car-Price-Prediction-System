@@ -1,0 +1,1 @@
+28656 [10] ERROR FinalAPI.Controllers.DataController (null) Error interno del servidor al obtener todos los datos: Could not find a part of the path 'C:\Users\david\Desktop\Curso\DigitalStackFinalProject\BackEnd\API\bin\Release\net8.0\Car-dataset\car details v4.csv'.
